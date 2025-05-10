@@ -14,25 +14,23 @@ struct MainView: View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    Image("logo")
-                        .resizable()
-                        .scaledToFit()
+                    LogoView()
                     
                     PhotoOfTheCabinetView()
                     
                     VStack(spacing: 16) {
                         CustomSectionView(
                             text: "Записаться на прием",
-                            imageName: "ЗаписатьсяНаПрием",
-                            screen: .test,
+                            imageName: "ЗаписатьсяНаПрием3",
+                            screen: .test1,
                             size: .big,
                             direction: .horizontal
                         )
                         
                         CustomSectionView(
                             text: "Стоимость услуг",
-                            imageName: "СтоимостьУслуг",
-                            screen: .test,
+                            imageName: "СтоимостьУслуг3",
+                            screen: .test1,
                             size: .big,
                             direction: .horizontal
                         )
@@ -40,15 +38,15 @@ struct MainView: View {
                         HStack(spacing: 16) {
                             CustomSectionView(
                                 text: "Наши врачи",
-                                imageName: "НашиВрачи",
+                                imageName: "НашиВрачи3",
                                 screen: .ourDoctors,
                                 size: .medium,
                                 direction: .horizontal
                             )
                             CustomSectionView(
                                 text: "Отзывы о нас",
-                                imageName: "ОтзывыОНас",
-                                screen: .test,
+                                imageName: "ОтзывыОНас3",
+                                screen: .test1,
                                 size: .small,
                                 direction: .vertical
                             )
@@ -56,12 +54,13 @@ struct MainView: View {
                         
                         CustomSectionView(
                             text: "Адрес клиники и контакты",
-                            imageName: "АдресКлиникиИКонтакты",
-                            screen: .test,
+                            imageName: "АдресКлиникиИКонтакты3",
+                            screen: .test1,
                             size: .big,
                             direction: .horizontal
                         )
                     }
+                    .padding(.bottom)
                     .padding(.top,8)
                     .padding(.horizontal)
                 }
@@ -73,6 +72,7 @@ struct MainView: View {
         }
     }
 }
+
 
 #Preview {
     MainView()

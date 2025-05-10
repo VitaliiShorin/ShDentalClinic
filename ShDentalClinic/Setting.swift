@@ -9,7 +9,9 @@ import Foundation
 import SwiftUICore
 
 enum Screen {
-    case test
+    case test1
+    case test2
+    case test3
     case record
     case price
     case ourDoctors
@@ -19,18 +21,22 @@ enum Screen {
     @ViewBuilder
     var view: some View {
         switch self {
-        case .test:
-            TestView()
+        case .test1:
+            Test1View()
+        case .test2:
+            Test2View()
+        case .test3:
+            Test3View()
         case .record:
-            TestView()
+            Test1View()
         case .price:
-            TestView()
+            Test1View()
         case .ourDoctors:
-            OurDoctorsView()
+            OurDoctorsView(doctors: doctors)
         case .reviews:
-            TestView()
+            Test1View()
         case .address:
-            TestView()
+            Test1View()
         }
     }
 }
