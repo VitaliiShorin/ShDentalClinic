@@ -102,7 +102,7 @@ private func createRectangleView(
             }
         }
         .frame(width: width, height: height)
-        .background(.main)
+        .background(.main2)
         .cornerRadius(15)
         .shadow(radius: 3)
     }
@@ -112,7 +112,7 @@ private func createRectangleView(
     CustomSectionView(
         text: "Отзывы",
         imageName: "ОтзывыОНас",
-        screen: .test,
+        screen: .test1,
         size: .medium,
         direction: .vertical
     )
