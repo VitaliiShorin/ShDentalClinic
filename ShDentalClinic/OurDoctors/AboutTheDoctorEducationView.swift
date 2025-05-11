@@ -26,7 +26,7 @@ struct AboutTheDoctorEducationView: View {
                 createSectionContent(text: continuingEducation)
                 
                 createSectionTitle(text: "Профессиональные навыки:")
-                createSectionContent(text: professionalSkills) 
+                createSectionContent(text: professionalSkills)
             }
         }
         .padding(.top, 7)

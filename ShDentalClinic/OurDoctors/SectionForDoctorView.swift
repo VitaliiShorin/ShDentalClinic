@@ -71,7 +71,7 @@ struct SectionForDoctorView: View {
             HStack {
                 NavigationLink(
                     destination: AboutTheDoctorView(
-                        photo1: imageName,
+                        photo: imageName,
                         fullName: fullName,
                         speciality: speciality,
                         education: education,
@@ -137,3 +137,4 @@ struct SectionForDoctorView: View {
         )
     )
 }
+

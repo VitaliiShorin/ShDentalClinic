@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AboutTheDoctorView: View {
-    let photo1: String
+    let photo: String
     let fullName: String
     let speciality: String
     let education: String
@@ -27,7 +27,7 @@ struct AboutTheDoctorView: View {
             VStack {
                 HStack {
                     Spacer()
-                    Image(photo1)
+                    Image(photo)
                         .resizable()
                         .frame(width: width / 2.1, height: height / 2.1)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -72,5 +72,5 @@ struct AboutTheDoctorView: View {
 }
 
 #Preview {
-    AboutTheDoctorView(photo1: doctors[0].imageName, fullName: doctors[0].fullName, speciality: doctors[0].speciality, education: doctors[0].education, certificate: doctors[0].certificate, continuingEducation: doctors[0].continuingEducation, professionalSkills: doctors[0].professionalSkills)
+    AboutTheDoctorView(photo: doctors[0].imageName, fullName: doctors[0].fullName, speciality: doctors[0].speciality, education: doctors[0].education, certificate: doctors[0].certificate, continuingEducation: doctors[0].continuingEducation, professionalSkills: doctors[0].professionalSkills)
 }
