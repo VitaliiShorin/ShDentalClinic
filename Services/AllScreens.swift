@@ -24,7 +24,7 @@ enum Screen {
         case .test1:
             Test1View()
         case .test2:
-            AboutTheDoctorView(photo: doctors[0].imageName, fullName: doctors[0].fullName, speciality: doctors[0].speciality, education: doctors[0].education, certificate: doctors[0].certificate, continuingEducation: doctors[0].continuingEducation, professionalSkills: doctors[0].professionalSkills)
+            AboutTheDoctorView(photo1: doctors[0].imageName, fullName: doctors[0].fullName, speciality: doctors[0].speciality, education: doctors[0].education, certificate: doctors[0].certificate, continuingEducation: doctors[0].continuingEducation, professionalSkills: doctors[0].professionalSkills)
         case .test3:
             Test3View()
         case .record:
