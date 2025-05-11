@@ -7,13 +7,18 @@
 
 import SwiftUI
 
-struct SectionForDoctorsView: View {
+struct SectionForDoctorView: View {
     let fullName: String
     let speciality: String
     let imageName: String
+    let education: String
+    let certificate: String
+    let continuingEducation: String
+    let professionalSkills: String
     var screen1: Screen
     let action2: Screen
     let action3: Screen
+    let doctor: Doctor
     
     @State private var navigateToDetails = false
     @State private var navigateToAppointment = false
@@ -22,15 +27,11 @@ struct SectionForDoctorsView: View {
     var body: some View {
         HStack {
             NavigationLink(destination: screen1.view, isActive: $navigateToDetails) {
-                myCreateRectangleView(
+                createSectionForDoctor(
                     fullName: fullName,
                     speciality: speciality,
                     imageName: imageName
                 )
-            }
-
-            NavigationLink(destination: action2.view, isActive: $navigateToDoctorInfo) {
-                EmptyView()
             }
             
             NavigationLink(destination: action3.view, isActive: $navigateToAppointment) {
@@ -39,7 +40,7 @@ struct SectionForDoctorsView: View {
         }
     }
     
-    private func myCreateRectangleView(
+    private func createSectionForDoctor(
         fullName: String,
         speciality: String,
         imageName: String
@@ -64,13 +65,21 @@ struct SectionForDoctorsView: View {
                     Text(speciality)
                         .font(.system(size: 14))
                         .foregroundColor(.black)
-                        .frame(width: width / 2.1, height: width / 5.25)
+                        .frame(width: width / 2.1, height: width / 5.25, alignment: .top)
                 }
             }
             HStack {
-                Button(action: {
-                    navigateToDoctorInfo.toggle() // Переход к информации о враче
-                }) {
+                NavigationLink(
+                    destination: AboutTheDoctorView(
+                        photo1: imageName,
+                        fullName: fullName,
+                        speciality: speciality,
+                        education: education,
+                        certificate: certificate,
+                        continuingEducation: continuingEducation,
+                        professionalSkills: professionalSkills
+                    )
+                ) {
                     HStack {
                         Image(systemName: "info.circle")
                             .foregroundColor(.blue)
@@ -103,12 +112,28 @@ struct SectionForDoctorsView: View {
 }
 
 #Preview {
-    SectionForDoctorsView(
+    SectionForDoctorView(
         fullName: "Аксенова\nВиктория\nВячеславовна",
         speciality: "Детский стоматолог\nТерапевт",
         imageName: "Виктория",
+        education: "Медицинская академия им. Н.И.Ломоносова",
+        certificate: "",
+        continuingEducation: "",
+        professionalSkills: "",
         screen1: .test1,
         action2: .test2,
-        action3: .test3
+        action3: .test3,
+        doctor: .init(
+            fullName: "Аксенова\nВиктория\nВячеславовна",
+            speciality: "Детский стоматолог\nТерапевт",
+            imageName: "Виктория",
+            education: "Медицинская академия им. Н.И.Ломоносова",
+            certificate: "",
+            continuingEducation: "",
+            professionalSkills: "",
+            screen1: .test1,
+            action2: .test2,
+            action3: .test3
+        )
     )
 }

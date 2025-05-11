@@ -16,6 +16,11 @@
 			path = ShDentalClinic;
 			sourceTree = "<group>";
 		};
+		3C75E9ED2DCFBA5500FBF896 /* Services */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Services;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +39,7 @@
 			children = (
 				3C75E8A92DCA439300FBF896 /* ShDentalClinic */,
 				3C75E8A82DCA439300FBF896 /* Products */,
+				3C75E9ED2DCFBA5500FBF896 /* Services */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +68,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				3C75E8A92DCA439300FBF896 /* ShDentalClinic */,
+				3C75E9ED2DCFBA5500FBF896 /* Services */,
 			);
 			name = ShDentalClinic;
 			packageProductDependencies = (
