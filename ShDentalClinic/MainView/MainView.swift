@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct MainView: View {
+    
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
