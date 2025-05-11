@@ -1,8 +1,8 @@
 //
-//  Setting.swift
+//  AllScreens.swift
 //  ShDentalClinic
 //
-//  Created by Виталий Шорин on 07.05.2025.
+//  Created by Виталий Шорин on 11.05.2025.
 //
 
 import Foundation
@@ -40,3 +40,4 @@ enum Screen {
         }
     }
 }
+
