@@ -45,3 +45,4 @@ struct PhotoOfTheCabinetView: View {
 #Preview {
     PhotoOfTheCabinetView()
 }
+
