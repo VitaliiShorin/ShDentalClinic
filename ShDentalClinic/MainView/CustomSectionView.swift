@@ -58,7 +58,8 @@ private func createRectangleView(
                 HStack {
                     Spacer()
                     Text(text)
-                        .font(.system(size: 18, weight: .bold))
+                        .font(.title3.bold())
+//                        .font(.system(size: 18, weight: .bold))
                         .foregroundStyle(.black)
                         .frame(
                             width: size == .big ? width / 2.3 : width / 3.2,
@@ -77,9 +78,10 @@ private func createRectangleView(
                 VStack {
                     Spacer()
                     Text(text)
-                        .font(.system(size: 18, weight: .bold))
+                        .font(.title3.bold())
+//                        .font(.system(size: 18, weight: .bold))
                         .foregroundStyle(.black)
-                        .frame(width: width / 1.1, height: width / 3)
+                        .frame(width: width / 1.1, height: width / 3.7)
                     Image(imageName)
                         .resizable()
                         .scaledToFit()
@@ -90,7 +92,8 @@ private func createRectangleView(
                 VStack {
                     Spacer()
                     Text(text)
-                        .font(.system(size: 18, weight: .bold))
+                        .font(.title3.bold())
+//                        .font(.system(size: 18, weight: .bold))
                         .foregroundStyle(.black)
                         .frame(width: width, height: width / 5)
                     Image(imageName)
@@ -111,9 +114,9 @@ private func createRectangleView(
 #Preview {
     CustomSectionView(
         text: "Отзывы",
-        imageName: "ОтзывыОНас",
+        imageName: "ОтзывыОНас3",
         screen: .test1,
-        size: .medium,
+        size: .small,
         direction: .vertical
     )
 }
