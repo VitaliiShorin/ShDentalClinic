@@ -124,4 +124,3 @@ struct SectionForDoctorView: View {
         action3: .test3
     )
 }
-

@@ -32,13 +32,11 @@ enum Screen {
         case .price:
             Test1View()
         case .ourDoctors:
-            OurDoctorsView(doctors: doctors)
+            OurDoctorsView(doctors: doctors) // Готов
         case .reviews:
             Test1View()
         case .address:
-            Test1View()
+            ClinicAddressAndContactsView() // Готов
         }
     }
 }
-
-
