@@ -24,8 +24,7 @@ struct OurDoctorsView: View {
                         professionalSkills: doctor.professionalSkills,
                         screen1: doctor.screen1,
                         action2: doctor.action2,
-                        action3: doctor.action3,
-                        doctor: doctor
+                        action3: doctor.action3
                     )
                 }
             }

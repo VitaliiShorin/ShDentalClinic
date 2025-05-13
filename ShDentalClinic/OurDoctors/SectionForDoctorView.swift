@@ -18,7 +18,6 @@ struct SectionForDoctorView: View {
     var screen1: Screen
     let action2: Screen
     let action3: Screen
-    let doctor: Doctor
     
     @State private var navigateToDetails = false
     @State private var navigateToAppointment = false
@@ -59,13 +58,13 @@ struct SectionForDoctorView: View {
                 }
                 VStack {
                     Text(fullName)
-                        .font(.system(size: 16, weight: .bold))
+                        .font(.callout.bold())
                         .foregroundColor(.black)
                         .frame(width: width / 2.1, height: width / 5.25)
                     Text(speciality)
-                        .font(.system(size: 14))
+                        .font(.footnote)
                         .foregroundColor(.black)
-                        .frame(width: width / 2.1, height: width / 5.25, alignment: .top)
+                        .frame(width: width / 2.1, height: width / 5, alignment: .top)
                 }
             }
             HStack {
@@ -84,11 +83,11 @@ struct SectionForDoctorView: View {
                         Image(systemName: "info.circle")
                             .foregroundColor(.blue)
                         Text("О враче")
-                            .font(.system(size: 14, weight: .bold))
+                            .font(.subheadline.bold())
                             .foregroundColor(.blue)
                     }
                 }
-                .frame(width: width / 2.5, height: width / 9)
+                .frame(width: width / 2.5, height: width / 8)
 
                 Button(action: {
                     navigateToAppointment.toggle() // Переход к записи на прием
@@ -97,11 +96,11 @@ struct SectionForDoctorView: View {
                         Image(systemName: "calendar")
                             .foregroundColor(.blue)
                         Text("Записаться на прием")
-                            .font(.system(size: 14, weight: .bold))
+                            .font(.subheadline.bold())
                             .foregroundColor(.blue)
                     }
                 }
-                .frame(width: width / 2.1, height: width / 9)
+                .frame(width: width / 2.1, height: width / 8)
             }
         }
         .frame(width: width, height: height)
@@ -113,28 +112,16 @@ struct SectionForDoctorView: View {
 
 #Preview {
     SectionForDoctorView(
-        fullName: "Аксенова\nВиктория\nВячеславовна",
-        speciality: "Детский стоматолог\nТерапевт",
-        imageName: "Виктория",
-        education: "Медицинская академия им. Н.И.Ломоносова",
-        certificate: "",
-        continuingEducation: "",
-        professionalSkills: "",
+        fullName: doctors[3].fullName,
+        speciality: doctors[3].speciality,
+        imageName: doctors[3].imageName,
+        education: doctors[3].education,
+        certificate: doctors[3].certificate,
+        continuingEducation: doctors[3].continuingEducation,
+        professionalSkills: doctors[3].professionalSkills,
         screen1: .test1,
         action2: .test2,
-        action3: .test3,
-        doctor: .init(
-            fullName: "Аксенова\nВиктория\nВячеславовна",
-            speciality: "Детский стоматолог\nТерапевт",
-            imageName: "Виктория",
-            education: "Медицинская академия им. Н.И.Ломоносова",
-            certificate: "",
-            continuingEducation: "",
-            professionalSkills: "",
-            screen1: .test1,
-            action2: .test2,
-            action3: .test3
-        )
+        action3: .test3
     )
 }
 

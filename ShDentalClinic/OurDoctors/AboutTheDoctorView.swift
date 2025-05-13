@@ -36,11 +36,11 @@ struct AboutTheDoctorView: View {
                     VStack {
                         Spacer()
                         Text(fullName)
-                            .font(.system(size: 16, weight: .bold))
-                            .frame(width: width / 2.2, height: height / 6, alignment: .topLeading)
+                            .font(.callout.weight(.bold))
+                            .frame(width: width / 2.2, height: height / 5.7, alignment: .topLeading)
                             .padding(.leading, 10)
                         Text(speciality)
-                            .font(.system(size: 14))
+                            .font(.subheadline)
                             .frame(width: width / 2.2, height: height / 4.2, alignment: .topLeading)
                             .padding(.leading, 10)
                         Spacer()
@@ -52,20 +52,23 @@ struct AboutTheDoctorView: View {
                 
                 Picker("", selection: $selection) {
                     Text("О враче").tag("1")
-                    Text("График").tag("2")
-                    Text("Отзывы").tag("3")
+                    Text("Отзывы").tag("2")
                 }
                 .pickerStyle(.segmented)
                 .padding(.top, 8)
             }
             .frame(width: width, height: height / 1.5)
             
-                VStack {
-                    if selection == "1" {
-                        AboutTheDoctorEducationView(education: education, certificate: certificate, continuingEducation: continuingEducation, professionalSkills: professionalSkills)
-                    }
-                    Spacer()
+            VStack {
+                if selection == "1" {
+                    AboutTheDoctorEducationView(education: education, certificate: certificate, continuingEducation: continuingEducation, professionalSkills: professionalSkills)
+                } else {
+                    // Необходимо передать данные из профиля пациента и раздела "Отзывы о нас" в дальнейшем
+                    ReviewsAboutTheDoctorView(patientName: "Виктория", date: "5 дней назад", numberOfStars: "5", reviewText: "Отличный прием! Все прошло хорошо. Спасибо. ")
                 }
+                Spacer()
+            }
+            
             
         }
     }

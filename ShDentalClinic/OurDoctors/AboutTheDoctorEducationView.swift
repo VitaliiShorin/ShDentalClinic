@@ -37,20 +37,21 @@ struct AboutTheDoctorEducationView: View {
     
     func createSectionTitle(text: String) -> some View {
         Text(text)
-            .font(.system(size: 16, weight: .bold))
+            .font(.callout.bold())
             .frame(width: UIScreen.main.bounds.width - 32, alignment: .leading)
             .padding(.bottom, 5)
+            .padding(.leading, 3)
     }
     
     func createSectionContent(text: String) -> some View {
         Text(text)
-            .font(.system(size: 16))
+            .font(.callout)
+            .padding(.leading, 12)
             .frame(width: UIScreen.main.bounds.width - 32, alignment: .leading)
-            .padding(.leading)
             .padding(.bottom, 5)
     }
 }
 
 #Preview {
-    AboutTheDoctorEducationView(education: doctors[0].education, certificate: doctors[0].certificate, continuingEducation: doctors[0].continuingEducation, professionalSkills: doctors[0].professionalSkills)
+    AboutTheDoctorEducationView(education: doctors[6].education, certificate: doctors[6].certificate, continuingEducation: doctors[6].continuingEducation, professionalSkills: doctors[6].professionalSkills)
 }

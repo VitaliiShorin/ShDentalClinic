@@ -43,7 +43,7 @@ struct MainView: View {
                                 direction: .horizontal
                             )
                             CustomSectionView(
-                                text: "Отзывы о нас",
+                                text: "Отзывы",
                                 imageName: "ОтзывыОНас3",
                                 screen: .test1,
                                 size: .small,
