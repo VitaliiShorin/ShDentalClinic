@@ -14,20 +14,18 @@ struct AboutTheDoctorEducationView: View {
     let professionalSkills: String
     
     var body: some View {
-        ZStack {
-            VStack {
-                createSectionTitle(text: "Образование:")
-                createSectionContent(text: education)
-                
-                createSectionTitle(text: "Сертификат специалиста:")
-                createSectionContent(text: certificate)
-                
-                createSectionTitle(text: "Повышение квалификации:")
-                createSectionContent(text: continuingEducation)
-                
-                createSectionTitle(text: "Профессиональные навыки:")
-                createSectionContent(text: professionalSkills)
-            }
+        VStack {
+            createSectionTitle(text: "Образование:")
+            createSectionContent(text: education)
+            
+            createSectionTitle(text: "Сертификат специалиста:")
+            createSectionContent(text: certificate)
+            
+            createSectionTitle(text: "Повышение квалификации:")
+            createSectionContent(text: continuingEducation)
+            
+            createSectionTitle(text: "Профессиональные навыки:")
+            createSectionContent(text: professionalSkills)
         }
         .padding(.top, 7)
         .frame(width: UIScreen.main.bounds.width)

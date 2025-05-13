@@ -59,7 +59,6 @@ private func createRectangleView(
                     Spacer()
                     Text(text)
                         .font(.title3.bold())
-//                        .font(.system(size: 18, weight: .bold))
                         .foregroundStyle(.black)
                         .frame(
                             width: size == .big ? width / 2.3 : width / 3.2,
@@ -79,7 +78,6 @@ private func createRectangleView(
                     Spacer()
                     Text(text)
                         .font(.title3.bold())
-//                        .font(.system(size: 18, weight: .bold))
                         .foregroundStyle(.black)
                         .frame(width: width / 1.1, height: width / 3.7)
                     Image(imageName)
@@ -93,7 +91,6 @@ private func createRectangleView(
                     Spacer()
                     Text(text)
                         .font(.title3.bold())
-//                        .font(.system(size: 18, weight: .bold))
                         .foregroundStyle(.black)
                         .frame(width: width, height: width / 5)
                     Image(imageName)
@@ -105,7 +102,7 @@ private func createRectangleView(
             }
         }
         .frame(width: width, height: height)
-        .background(.main2)
+        .background(.main)
         .cornerRadius(15)
         .shadow(radius: 3)
     }

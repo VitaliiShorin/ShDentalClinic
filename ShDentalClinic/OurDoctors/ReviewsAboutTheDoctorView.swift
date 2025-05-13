@@ -70,6 +70,3 @@ struct ReviewsAboutTheDoctorView: View {
 #Preview {
     ReviewsAboutTheDoctorView(patientName: "Виктория", date: "5 дней назад", numberOfStars: "5", reviewText: "Здесь будет текст отзыва пациента")
 }
-
-
-

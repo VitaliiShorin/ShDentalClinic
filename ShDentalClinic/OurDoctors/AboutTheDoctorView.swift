@@ -68,8 +68,6 @@ struct AboutTheDoctorView: View {
                 }
                 Spacer()
             }
-            
-            
         }
     }
 }

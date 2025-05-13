@@ -10,14 +10,14 @@ import SwiftUI
 struct LogoView: View {
     var body: some View {
         VStack {
-            Image("logo")
+            Image("logo2")
                 .resizable()
                 .scaledToFit()
                 .shadow(radius: 3)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
         }
         .padding(.top, 10)
-        .shadow(radius: 2)
+        .shadow(radius: 1)
     }
 }
 

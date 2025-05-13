@@ -54,7 +54,7 @@ struct MainView: View {
                         CustomSectionView(
                             text: "Адрес клиники и контакты",
                             imageName: "АдресКлиникиИКонтакты3",
-                            screen: .test1,
+                            screen: .address,
                             size: .big,
                             direction: .horizontal
                         )
@@ -76,8 +76,3 @@ struct MainView: View {
 #Preview {
     MainView()
 }
-
-
-
-
-
