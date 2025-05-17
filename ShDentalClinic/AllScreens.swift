@@ -24,7 +24,8 @@ enum Screen {
         case .test1:
             Test1View()
         case .test2:
-            AboutTheDoctorView(photo: doctors[0].imageName, fullName: doctors[0].fullName, speciality: doctors[0].speciality, education: doctors[0].education, certificate: doctors[0].certificate, continuingEducation: doctors[0].continuingEducation, professionalSkills: doctors[0].professionalSkills)
+            AboutTheDoctorView(doctor: doctors[0]) // Готов
+                .environmentObject(ReviewsViewModel())
         case .test3:
             Test3View()
         case .record:
@@ -34,7 +35,7 @@ enum Screen {
         case .ourDoctors:
             OurDoctorsView(doctors: doctors) // Готов
         case .reviews:
-            Test1View()
+            ReviewsView(doctors: doctors)
         case .address:
             ClinicAddressAndContactsView() // Готов
         }

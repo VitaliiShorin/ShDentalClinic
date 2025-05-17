@@ -8,16 +8,9 @@
 import SwiftUI
 
 struct SectionForDoctorView: View {
-    let fullName: String
-    let speciality: String
-    let imageName: String
-    let education: String
-    let certificate: String
-    let continuingEducation: String
-    let professionalSkills: String
-    var screen1: Screen
-    let action2: Screen
-    let action3: Screen
+    let doctor: Doctor
+    
+    @EnvironmentObject var reviewsVM: ReviewsViewModel
     
     @State private var navigateToDetails = false
     @State private var navigateToAppointment = false
@@ -25,15 +18,15 @@ struct SectionForDoctorView: View {
 
     var body: some View {
         HStack {
-            NavigationLink(destination: screen1.view, isActive: $navigateToDetails) {
+            NavigationLink(destination: doctor.screen1.view, isActive: $navigateToDetails) {
                 createSectionForDoctor(
-                    fullName: fullName,
-                    speciality: speciality,
-                    imageName: imageName
+                    fullName: doctor.fullName,
+                    speciality: doctor.speciality,
+                    imageName: doctor.imageName
                 )
             }
             
-            NavigationLink(destination: action3.view, isActive: $navigateToAppointment) {
+            NavigationLink(destination: doctor.action3.view, isActive: $navigateToAppointment) {
                 EmptyView()
             }
         }
@@ -50,41 +43,31 @@ struct SectionForDoctorView: View {
         return VStack {
             HStack {
                 VStack {
-                    Image(imageName)
+                    Image(doctor.imageName)
                         .resizable()
                         .scaledToFit()
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .frame(width: width / 2.5, height: width / 2.5)
                 }
                 VStack {
-                    Text(fullName)
+                    Text(doctor.fullName)
                         .font(.callout.bold())
-                        .foregroundColor(.black)
+                        .foregroundStyle(.black)
                         .frame(width: width / 2.1, height: width / 5.25)
-                    Text(speciality)
+                    Text(doctor.speciality)
                         .font(.footnote)
-                        .foregroundColor(.black)
+                        .foregroundStyle(.black)
                         .frame(width: width / 2.1, height: width / 5, alignment: .top)
                 }
             }
             HStack {
-                NavigationLink(
-                    destination: AboutTheDoctorView(
-                        photo: imageName,
-                        fullName: fullName,
-                        speciality: speciality,
-                        education: education,
-                        certificate: certificate,
-                        continuingEducation: continuingEducation,
-                        professionalSkills: professionalSkills
-                    )
-                ) {
+                NavigationLink(destination: AboutTheDoctorView(doctor: doctor)) {
                     HStack {
                         Image(systemName: "info.circle")
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.blue)
                         Text("О враче")
                             .font(.subheadline.bold())
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.blue)
                     }
                 }
                 .frame(width: width / 2.5, height: width / 8)
@@ -94,10 +77,10 @@ struct SectionForDoctorView: View {
                 }) {
                     HStack {
                         Image(systemName: "calendar")
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.blue)
                         Text("Записаться на прием")
                             .font(.subheadline.bold())
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.blue)
                     }
                 }
                 .frame(width: width / 2.1, height: width / 8)
@@ -111,16 +94,6 @@ struct SectionForDoctorView: View {
 }
 
 #Preview {
-    SectionForDoctorView(
-        fullName: doctors[3].fullName,
-        speciality: doctors[3].speciality,
-        imageName: doctors[3].imageName,
-        education: doctors[3].education,
-        certificate: doctors[3].certificate,
-        continuingEducation: doctors[3].continuingEducation,
-        professionalSkills: doctors[3].professionalSkills,
-        screen1: .test1,
-        action2: .test2,
-        action3: .test3
-    )
+    SectionForDoctorView(doctor: doctors[0])
+        .environmentObject(ReviewsViewModel())
 }

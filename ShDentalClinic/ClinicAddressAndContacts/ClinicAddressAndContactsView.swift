@@ -89,7 +89,7 @@ struct ClinicAddressAndContactsView: View {
                 Image(systemName: image)
                     .foregroundStyle(.blue)
                 Text(title)
-                    .foregroundColor(.blue)
+                    .foregroundStyle(.blue)
                     .font(.headline)
             }
             .padding(.vertical, 2)

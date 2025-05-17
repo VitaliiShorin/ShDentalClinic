@@ -8,24 +8,21 @@
 import SwiftUI
 
 struct AboutTheDoctorEducationView: View {
-    let education: String
-    let certificate: String
-    let continuingEducation: String
-    let professionalSkills: String
+    let doctor: Doctor
     
     var body: some View {
         VStack {
             createSectionTitle(text: "Образование:")
-            createSectionContent(text: education)
+            createSectionContent(text: doctor.education)
             
             createSectionTitle(text: "Сертификат специалиста:")
-            createSectionContent(text: certificate)
+            createSectionContent(text: doctor.certificate)
             
             createSectionTitle(text: "Повышение квалификации:")
-            createSectionContent(text: continuingEducation)
+            createSectionContent(text: doctor.continuingEducation)
             
             createSectionTitle(text: "Профессиональные навыки:")
-            createSectionContent(text: professionalSkills)
+            createSectionContent(text: doctor.professionalSkills)
         }
         .padding(.top, 7)
         .frame(width: UIScreen.main.bounds.width)
@@ -51,5 +48,5 @@ struct AboutTheDoctorEducationView: View {
 }
 
 #Preview {
-    AboutTheDoctorEducationView(education: doctors[6].education, certificate: doctors[6].certificate, continuingEducation: doctors[6].continuingEducation, professionalSkills: doctors[6].professionalSkills)
+    AboutTheDoctorEducationView(doctor: doctors[0])
 }

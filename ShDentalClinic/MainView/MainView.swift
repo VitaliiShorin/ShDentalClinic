@@ -45,7 +45,7 @@ struct MainView: View {
                             CustomSectionView(
                                 text: "Отзывы",
                                 imageName: "ОтзывыОНас3",
-                                screen: .test1,
+                                screen: .reviews,
                                 size: .small,
                                 direction: .vertical
                             )
