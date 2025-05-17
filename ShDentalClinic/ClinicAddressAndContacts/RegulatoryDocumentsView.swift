@@ -46,7 +46,7 @@ struct RegulatoryDocumentsView: View {
                                 .font(.title2)
                             Text(document.title)
                                 .multilineTextAlignment(.leading)
-                                .foregroundColor(.blue)
+                                .foregroundStyle(.blue)
                         }
                     }
                 }

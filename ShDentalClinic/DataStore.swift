@@ -50,7 +50,7 @@ let doctors: [Doctor] = [
         action3: .test3
     ),
     Doctor(
-        fullName: "Аксенова\nВиктория\nВячеславовна",
+        fullName: "Аксенова\nАлина\nВячеславовна",
         speciality: "Детский стоматолог\nТерапевт",
         imageName: "Виктория",
         education: """

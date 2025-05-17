@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct ShDentalClinicApp: App {
+    @StateObject var reviewsVM = ReviewsViewModel()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(reviewsVM)
         }
     }
 }

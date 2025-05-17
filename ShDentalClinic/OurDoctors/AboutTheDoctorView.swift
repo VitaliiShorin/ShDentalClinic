@@ -8,16 +8,10 @@
 import SwiftUI
 
 struct AboutTheDoctorView: View {
-    let photo: String
-    let fullName: String
-    let speciality: String
-    let education: String
-    let certificate: String
-    let continuingEducation: String
-    let professionalSkills: String
-    
+    let doctor: Doctor
     
     @State var selection = "1"
+    @EnvironmentObject var reviewsVM: ReviewsViewModel
     
     var body: some View {
         let width = UIScreen.main.bounds.width - 32
@@ -27,7 +21,7 @@ struct AboutTheDoctorView: View {
             VStack {
                 HStack {
                     Spacer()
-                    Image(photo)
+                    Image(doctor.imageName)
                         .resizable()
                         .frame(width: width / 2.1, height: height / 2.1)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -35,11 +29,11 @@ struct AboutTheDoctorView: View {
                     Spacer()
                     VStack {
                         Spacer()
-                        Text(fullName)
+                        Text(doctor.fullName)
                             .font(.callout.weight(.bold))
                             .frame(width: width / 2.2, height: height / 5.7, alignment: .topLeading)
                             .padding(.leading, 10)
-                        Text(speciality)
+                        Text(doctor.speciality)
                             .font(.subheadline)
                             .frame(width: width / 2.2, height: height / 4.2, alignment: .topLeading)
                             .padding(.leading, 10)
@@ -61,17 +55,40 @@ struct AboutTheDoctorView: View {
             
             VStack {
                 if selection == "1" {
-                    AboutTheDoctorEducationView(education: education, certificate: certificate, continuingEducation: continuingEducation, professionalSkills: professionalSkills)
+                    AboutTheDoctorEducationView(doctor: doctor)
                 } else {
-                    // Необходимо передать данные из профиля пациента и раздела "Отзывы о нас" в дальнейшем
-                    ReviewsAboutTheDoctorView(patientName: "Виктория", date: "5 дней назад", numberOfStars: "5", reviewText: "Отличный прием! Все прошло хорошо. Спасибо. ")
+                    let doctorReviews = reviewsVM.reviews(forDoctor: doctor.fullName)
+                    if doctorReviews.isEmpty {
+                        Text("Пока нет отзывов. Оставьте свой!")
+                            .foregroundStyle(.gray)
+                    } else {
+                        VStack(spacing: 16) {
+                            ForEach(doctorReviews) { review in
+                                ReviewsAboutTheDoctorView(
+                                    patientName: review.patientName,
+                                    date: Self.dateString(review.date),
+                                    numberOfStars: "\(review.numberOfStars)",
+                                    reviewText: review.reviewText
+                                )
+                            }
+                        }
+                    }
                 }
                 Spacer()
             }
         }
     }
+    
+    static func dateString(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        formatter.locale = Locale(identifier: "ru_RU")
+        return formatter.string(from: date)
+    }
 }
-
+    
 #Preview {
-    AboutTheDoctorView(photo: doctors[0].imageName, fullName: doctors[0].fullName, speciality: doctors[0].speciality, education: doctors[0].education, certificate: doctors[0].certificate, continuingEducation: doctors[0].continuingEducation, professionalSkills: doctors[0].professionalSkills)
+    AboutTheDoctorView(doctor: doctors[0])
+        .environmentObject(ReviewsViewModel())
 }

@@ -15,4 +15,5 @@ struct Test1View: View {
 
 #Preview {
     Test1View()
+        .environmentObject(ReviewsViewModel())
 }

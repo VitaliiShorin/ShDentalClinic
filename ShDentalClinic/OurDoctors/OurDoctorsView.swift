@@ -14,18 +14,7 @@ struct OurDoctorsView: View {
         ScrollView {
             VStack(spacing: 16) {
                 ForEach(doctors, id: \.fullName) { doctor in
-                    SectionForDoctorView(
-                        fullName: doctor.fullName,
-                        speciality: doctor.speciality,
-                        imageName: doctor.imageName,
-                        education: doctor.education,
-                        certificate: doctor.certificate,
-                        continuingEducation: doctor.continuingEducation,
-                        professionalSkills: doctor.professionalSkills,
-                        screen1: doctor.screen1,
-                        action2: doctor.action2,
-                        action3: doctor.action3
-                    )
+                    SectionForDoctorView(doctor: doctor)
                 }
             }
             .padding()
@@ -37,4 +26,5 @@ struct OurDoctorsView: View {
 
 #Preview {
     OurDoctorsView(doctors: doctors)
+        .environmentObject(ReviewsViewModel())
 }

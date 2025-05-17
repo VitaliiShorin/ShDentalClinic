@@ -15,7 +15,12 @@ struct ReviewsAboutTheDoctorView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            createSectionForReview(patientName: patientName, date: date, numberOfStars: numberOfStars, reviewText: reviewText)
+            createSectionForReview(
+                patientName: patientName,
+                date: date,
+                numberOfStars: numberOfStars,
+                reviewText: reviewText
+            )
         }
     }
     
@@ -41,7 +46,9 @@ struct ReviewsAboutTheDoctorView: View {
                     Text(date)
                         .font(.footnote)
                 }
+                
                 Spacer()
+                
                 HStack(spacing: 5) {
                     Image(systemName: "star.fill")
                         .font(.body)
@@ -69,4 +76,5 @@ struct ReviewsAboutTheDoctorView: View {
 
 #Preview {
     ReviewsAboutTheDoctorView(patientName: "Виктория", date: "5 дней назад", numberOfStars: "5", reviewText: "Здесь будет текст отзыва пациента")
+        .environmentObject(ReviewsViewModel())
 }
