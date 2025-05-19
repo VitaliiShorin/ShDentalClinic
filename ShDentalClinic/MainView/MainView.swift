@@ -29,7 +29,7 @@ struct MainView: View {
                         CustomSectionView(
                             text: "Стоимость услуг",
                             imageName: "СтоимостьУслуг3",
-                            screen: .test1,
+                            screen: .price,
                             size: .big,
                             direction: .horizontal
                         )

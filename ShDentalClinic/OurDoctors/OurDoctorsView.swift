@@ -19,6 +19,7 @@ struct OurDoctorsView: View {
             }
             .padding()
         }
+        .navigationTitle("Наши врачи")
         .padding(.bottom, 1)
         .padding(.top, 1)
     }

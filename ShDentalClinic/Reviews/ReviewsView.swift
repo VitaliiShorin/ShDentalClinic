@@ -34,6 +34,7 @@ struct ReviewsView: View {
             .background(.gray .opacity(0.08))
             .clipShape(RoundedRectangle(cornerRadius: 15))
         }
+        .navigationTitle("Отзывы")
     }
 }
 

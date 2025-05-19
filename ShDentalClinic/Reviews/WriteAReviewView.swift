@@ -96,7 +96,7 @@ struct WriteAReviewView: View {
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(width: width / 2, height: 40)
-                    .background(isButtonActive ? Color.blue : Color.gray)
+                    .background(isButtonActive ? .blue : .gray)
                     .cornerRadius(15)
             }
             .disabled(!isButtonActive)
