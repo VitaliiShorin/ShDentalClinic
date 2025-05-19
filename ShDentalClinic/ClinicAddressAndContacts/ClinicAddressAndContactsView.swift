@@ -16,7 +16,7 @@ struct ClinicAddressAndContactsView: View {
     
     struct PointAnnotation: Identifiable {
         let id = UUID()
-        var coordinate: CLLocationCoordinate2D
+        let coordinate: CLLocationCoordinate2D
     }
     
     var body: some View {

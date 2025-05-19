@@ -69,10 +69,17 @@ class ReviewsViewModel: ObservableObject {
 
     func averageStarsString(forDoctor name: String) -> String {
         let average = averageStars(forDoctor: name)
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        formatter.minimumFractionDigits = 1
-        formatter.decimalSeparator = ","
-        return formatter.string(from: NSNumber(value: average)) ?? "0,0"
+
+        if average == 0 {
+            return "0"
+        } else if average.truncatingRemainder(dividingBy: 1) == 0 {
+            return String(Int(average))
+        } else {
+            let formatter = NumberFormatter()
+            formatter.minimumFractionDigits = 1
+            formatter.maximumFractionDigits = 1
+            formatter.decimalSeparator = ","
+            return formatter.string(from: NSNumber(value: average)) ?? String(format: "%.1f", average).replacingOccurrences(of: ".", with: ",")
+        }
     }
 }

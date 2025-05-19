@@ -31,7 +31,7 @@ enum Screen {
         case .record:
             Test1View()
         case .price:
-            Test1View()
+            TreatmentCostsView()
         case .ourDoctors:
             OurDoctorsView(doctors: doctors) // Готов
         case .reviews:
