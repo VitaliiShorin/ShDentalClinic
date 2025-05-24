@@ -93,9 +93,9 @@ struct WriteAReviewView: View {
                 text = ""
             } label: {
                 Text("Отправить")
-                    .font(.headline)
                     .foregroundStyle(.white)
-                    .frame(width: width / 2, height: 40)
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 12)
                     .background(isButtonActive ? .blue : .gray)
                     .cornerRadius(15)
             }

@@ -21,7 +21,7 @@ struct MainView: View {
                         CustomSectionView(
                             text: "Записаться на прием",
                             imageName: "ЗаписатьсяНаПрием3",
-                            screen: .test1,
+                            screen: .appointment,
                             size: .big,
                             direction: .horizontal
                         )

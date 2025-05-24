@@ -1,5 +1,5 @@
 //
-//  AllProcedures.swift
+//  Procedures.swift
 //  ShDentalClinic
 //
 //  Created by Виталий Шорин on 18.05.2025.
@@ -151,28 +151,6 @@ let serviceCategories: [MainAreas] = [
         ]
     ),
     MainAreas(
-        name: "Рентген-диагностика",
-        image: "РентгенДиагностика",
-        allProceduresOfTheSpecialty: [
-            ProcedureName(name: "Прицельный снимок зуба", price: "450 ₽"),
-            ProcedureName(name: "Ортопантомограмма", price: "1 400 ₽"),
-            ProcedureName(name: "Телерадиография", price: "1 900 ₽"),
-            ProcedureName(name: "3D КТ (одна зона)", price: "2 000 ₽"),
-            ProcedureName(name: "Расшифровка снимка", price: "400 ₽"),
-            ProcedureName(name: "Фотопротокол (до/после)", price: "700 ₽"),
-            ProcedureName(name: "Интраоральное фото", price: "300 ₽"),
-            ProcedureName(name: "Печать снимка", price: "200 ₽"),
-            ProcedureName(name: "Снимок на переносном рентгене", price: "850 ₽"),
-            ProcedureName(name: "Выписка снимков на носитель", price: "300 ₽"),
-            ProcedureName(name: "Ретгеноконтрактный снимок", price: "1 200 ₽"),
-            ProcedureName(name: "Планирование операций по КТ", price: "1 600 ₽"),
-            ProcedureName(name: "Телерентгенография суставов", price: "1 800 ₽"),
-            ProcedureName(name: "Диагностика околоносовых пазух", price: "1 200 ₽"),
-            ProcedureName(name: "Печать ОПТГ формата А3", price: "700 ₽"),
-            ProcedureName(name: "Снимок височно-нижнечелюстного сустава", price: "1 000 ₽")
-        ]
-    ),
-    MainAreas(
         name: "Пародонтология",
         image: "Пародонтология",
         allProceduresOfTheSpecialty: [
@@ -238,26 +216,6 @@ let serviceCategories: [MainAreas] = [
         ]
     ),
     MainAreas(
-        name: "Анестезиология",
-        image: "Анестезиология",
-        allProceduresOfTheSpecialty: [
-            ProcedureName(name: "Инфильтрационная анестезия", price: "600 ₽"),
-            ProcedureName(name: "Проводниковая анестезия", price: "800 ₽"),
-            ProcedureName(name: "Аппликационная анестезия", price: "300 ₽"),
-            ProcedureName(name: "Парадентальная анестезия", price: "850 ₽"),
-            ProcedureName(name: "Компьютерная анестезия", price: "1 400 ₽"),
-            ProcedureName(name: "Седация (1 час)", price: "6 000 ₽"),
-            ProcedureName(name: "Общая анестезия (1 час)", price: "15 000 ₽"),
-            ProcedureName(name: "Детская седация (ингаляционная)", price: "4 500 ₽"),
-            ProcedureName(name: "Местная анестезия ребенку", price: "500 ₽"),
-            ProcedureName(name: "Лечение под наркозом", price: "от 19 000 ₽"),
-            ProcedureName(name: "Предварительное обезболивание", price: "350 ₽"),
-            ProcedureName(name: "Внутривенная анестезия", price: "3 700 ₽"),
-            ProcedureName(name: "Контроль глубины наркоза", price: "2 000 ₽"),
-            ProcedureName(name: "Минимальная седация (Мидазолам)", price: "2 700 ₽")
-        ]
-    ),
-    MainAreas(
         name: "Консультации",
         image: "Консультации",
         allProceduresOfTheSpecialty: [
@@ -298,6 +256,48 @@ let serviceCategories: [MainAreas] = [
             ProcedureName(name: "Фторирование эмали", price: "1 200 ₽"),
             ProcedureName(name: "Художественная реставрация клыка", price: "5 800 ₽"),
             ProcedureName(name: "Моделирование улыбки", price: "6 400 ₽")
+        ]
+    ),
+    MainAreas(
+        name: "Анестезиология",
+        image: "Анестезиология",
+        allProceduresOfTheSpecialty: [
+            ProcedureName(name: "Инфильтрационная анестезия", price: "600 ₽"),
+            ProcedureName(name: "Проводниковая анестезия", price: "800 ₽"),
+            ProcedureName(name: "Аппликационная анестезия", price: "300 ₽"),
+            ProcedureName(name: "Парадентальная анестезия", price: "850 ₽"),
+            ProcedureName(name: "Компьютерная анестезия", price: "1 400 ₽"),
+            ProcedureName(name: "Седация (1 час)", price: "6 000 ₽"),
+            ProcedureName(name: "Общая анестезия (1 час)", price: "15 000 ₽"),
+            ProcedureName(name: "Детская седация (ингаляционная)", price: "4 500 ₽"),
+            ProcedureName(name: "Местная анестезия ребенку", price: "500 ₽"),
+            ProcedureName(name: "Лечение под наркозом", price: "от 19 000 ₽"),
+            ProcedureName(name: "Предварительное обезболивание", price: "350 ₽"),
+            ProcedureName(name: "Внутривенная анестезия", price: "3 700 ₽"),
+            ProcedureName(name: "Контроль глубины наркоза", price: "2 000 ₽"),
+            ProcedureName(name: "Минимальная седация (Мидазолам)", price: "2 700 ₽")
+        ]
+    ),
+    MainAreas(
+        name: "Рентген-диагностика",
+        image: "РентгенДиагностика",
+        allProceduresOfTheSpecialty: [
+            ProcedureName(name: "Прицельный снимок зуба", price: "450 ₽"),
+            ProcedureName(name: "Ортопантомограмма", price: "1 400 ₽"),
+            ProcedureName(name: "Телерадиография", price: "1 900 ₽"),
+            ProcedureName(name: "3D КТ (одна зона)", price: "2 000 ₽"),
+            ProcedureName(name: "Расшифровка снимка", price: "400 ₽"),
+            ProcedureName(name: "Фотопротокол (до/после)", price: "700 ₽"),
+            ProcedureName(name: "Интраоральное фото", price: "300 ₽"),
+            ProcedureName(name: "Печать снимка", price: "200 ₽"),
+            ProcedureName(name: "Снимок на переносном рентгене", price: "850 ₽"),
+            ProcedureName(name: "Выписка снимков на носитель", price: "300 ₽"),
+            ProcedureName(name: "Ретгеноконтрактный снимок", price: "1 200 ₽"),
+            ProcedureName(name: "Планирование операций по КТ", price: "1 600 ₽"),
+            ProcedureName(name: "Телерентгенография суставов", price: "1 800 ₽"),
+            ProcedureName(name: "Диагностика околоносовых пазух", price: "1 200 ₽"),
+            ProcedureName(name: "Печать ОПТГ формата А3", price: "700 ₽"),
+            ProcedureName(name: "Снимок височно-нижнечелюстного сустава", price: "1 000 ₽")
         ]
     )
 ]

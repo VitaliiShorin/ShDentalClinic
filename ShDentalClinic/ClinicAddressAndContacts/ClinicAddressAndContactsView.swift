@@ -28,22 +28,22 @@ struct ClinicAddressAndContactsView: View {
                 createSection(
                     image: "location",
                     title: "Адрес клиники:",
-                    content: "117405, г. Москва, Варшивское шоссе, 256к7"
+                    information: "117405, г. Москва, Варшивское шоссе, 256к7"
                 )
                 createSection(
                     image: "tram.fill",
                     title: "Ближайшие станции и метро:",
-                    content: "МЦД-2 ст. Красный Строитель\nСтанция метро Улица Академика Янгеля"
+                    information: "МЦД-2 ст. Красный Строитель\nСтанция метро Улица Академика Янгеля"
                 )
                 createSection(
                     image: "calendar.badge.checkmark",
                     title: "Режим работы:",
-                    content: "По будням: 9:00-20:00\nСуббота: 9:00-19:00\nВоскресенье: 09:00-17:00"
+                    information: "По будням: 9:00-20:00\nСуббота: 9:00-19:00\nВоскресенье: 09:00-17:00"
                 )
                 createSection(
                     image: "phone",
                     title: "Телефон:",
-                    content: "+7 (915) 154-**-**"
+                    information: "+7 (915) 154-**-**"
                 )
                 
                 navigationLinkSection(
@@ -67,7 +67,7 @@ struct ClinicAddressAndContactsView: View {
         }
     }
     
-    private func createSection(image: String, title: String, content: String) -> some View {
+    private func createSection(image: String, title: String, information: String) -> some View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: image)
@@ -76,7 +76,7 @@ struct ClinicAddressAndContactsView: View {
                     .font(.body.bold())
             }
             .padding(.bottom, 2)
-            Text(content)
+            Text(information)
                 .font(.callout)
                 .padding(.leading, 12)
         }

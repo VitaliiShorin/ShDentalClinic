@@ -11,23 +11,15 @@ struct SectionForDoctorView: View {
     let doctor: Doctor
     
     @EnvironmentObject var reviewsVM: ReviewsViewModel
-    
-    @State private var navigateToDetails = false
-    @State private var navigateToAppointment = false
-    @State private var navigateToDoctorInfo = false
 
     var body: some View {
         HStack {
-            NavigationLink(destination: doctor.screen1.view, isActive: $navigateToDetails) {
+            NavigationLink(destination: AboutTheDoctorView(doctor: doctor)) {
                 createSectionForDoctor(
                     fullName: doctor.fullName,
                     speciality: doctor.speciality,
                     imageName: doctor.imageName
                 )
-            }
-            
-            NavigationLink(destination: doctor.action3.view, isActive: $navigateToAppointment) {
-                EmptyView()
             }
         }
     }
@@ -72,9 +64,7 @@ struct SectionForDoctorView: View {
                 }
                 .frame(width: width / 2.5, height: width / 8)
 
-                Button(action: {
-                    navigateToAppointment.toggle() // Переход к записи на прием
-                }) {
+                NavigationLink(destination: AppointmentSchedulingView()) {
                     HStack {
                         Image(systemName: "calendar")
                             .foregroundStyle(.blue)
