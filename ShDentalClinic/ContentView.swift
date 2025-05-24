@@ -10,22 +10,24 @@ import SwiftUI
 struct ContentView: View {
     
     var body: some View {
-        TabView {
-            MainView()
-                .tabItem {
-                    Image(systemName: "house")
-                    Text("Главная")
-                }
-            Text("Записи")
-                .tabItem {
-                    Image(systemName: "plus.circle.fill")
-                    Text("Запись на прием")
-                }
-            Text("Информация")
-                .tabItem {
-                    Image(systemName: "person")
-                    Text("Профиль")
-                }
+        NavigationView {
+            TabView {
+                MainView()
+                    .tabItem {
+                        Image(systemName: "house")
+                        Text("Главная")
+                    }
+                AppointmentSchedulingView()
+                    .tabItem {
+                        Image(systemName: "plus.circle.fill")
+                        Text("Запись на прием")
+                    }
+                Text("Информация")
+                    .tabItem {
+                        Image(systemName: "person")
+                        Text("Профиль")
+                    }
+            }
         }
     }
 }
@@ -33,4 +35,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(ReviewsViewModel())
+        .environmentObject(BookedAppointmentsViewModel())
 }
