@@ -10,65 +10,63 @@ import SwiftUI
 struct MainView: View {
     
     var body: some View {
-        NavigationView {
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    LogoView()
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack {
+                LogoView()
+                
+                PhotoOfTheCabinetView()
+                
+                VStack(spacing: 16) {
+                    CustomSectionView(
+                        text: "Записаться на прием",
+                        imageName: "ЗаписатьсяНаПрием3",
+                        screen: .appointment,
+                        size: .big,
+                        direction: .horizontal
+                    )
                     
-                    PhotoOfTheCabinetView()
+                    CustomSectionView(
+                        text: "Стоимость услуг",
+                        imageName: "СтоимостьУслуг3",
+                        screen: .price,
+                        size: .big,
+                        direction: .horizontal
+                    )
                     
-                    VStack(spacing: 16) {
+                    HStack(spacing: 16) {
                         CustomSectionView(
-                            text: "Записаться на прием",
-                            imageName: "ЗаписатьсяНаПрием3",
-                            screen: .appointment,
-                            size: .big,
+                            text: "Наши врачи",
+                            imageName: "НашиВрачи3",
+                            screen: .ourDoctors,
+                            size: .medium,
                             direction: .horizontal
                         )
-                        
                         CustomSectionView(
-                            text: "Стоимость услуг",
-                            imageName: "СтоимостьУслуг3",
-                            screen: .price,
-                            size: .big,
-                            direction: .horizontal
-                        )
-                        
-                        HStack(spacing: 16) {
-                            CustomSectionView(
-                                text: "Наши врачи",
-                                imageName: "НашиВрачи3",
-                                screen: .ourDoctors,
-                                size: .medium,
-                                direction: .horizontal
-                            )
-                            CustomSectionView(
-                                text: "Отзывы",
-                                imageName: "ОтзывыОНас3",
-                                screen: .reviews,
-                                size: .small,
-                                direction: .vertical
-                            )
-                        }
-                        
-                        CustomSectionView(
-                            text: "Адрес клиники и контакты",
-                            imageName: "АдресКлиникиИКонтакты3",
-                            screen: .address,
-                            size: .big,
-                            direction: .horizontal
+                            text: "Отзывы",
+                            imageName: "ОтзывыОНас3",
+                            screen: .reviews,
+                            size: .small,
+                            direction: .vertical
                         )
                     }
-                    .padding(.bottom)
-                    .padding(.top,8)
-                    .padding(.horizontal)
+                    
+                    CustomSectionView(
+                        text: "Адрес клиники и контакты",
+                        imageName: "АдресКлиникиИКонтакты3",
+                        screen: .address,
+                        size: .big,
+                        direction: .horizontal
+                    )
                 }
-                
+                .padding(.bottom)
+                .padding(.top,8)
+                .padding(.horizontal)
             }
-            .padding(.top)
-            .padding(.bottom, 1)
             
         }
+        .padding(.top)
+        .padding(.bottom, 1)
+        
     }
 }
 

@@ -44,7 +44,7 @@ struct CallbackFormView: View {
                     .foregroundStyle(.white)
                     .padding(.horizontal, 32)
                     .padding(.vertical, 12)
-                    .background(isButtonActive ? Color.blue : Color.gray)
+                    .background(isButtonActive ? .blue : .gray)
                     .cornerRadius(15)
             }
             .disabled(!isButtonActive)

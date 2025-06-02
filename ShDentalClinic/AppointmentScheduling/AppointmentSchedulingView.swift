@@ -19,7 +19,7 @@ struct AppointmentSchedulingView: View {
                 Text("Online запись").tag("2")
             }
             .pickerStyle(.segmented)
-            .padding(.horizontal)
+            .padding([.horizontal, .top])
             
             if selection == "1" {
                 CallTheClinicView()
