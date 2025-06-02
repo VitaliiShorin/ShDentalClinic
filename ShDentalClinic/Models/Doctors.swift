@@ -50,7 +50,7 @@ let doctors: [Doctor] = [
         workingDays: [2, 3, 4, 5, 6, 7] // Пн, Вт, Ср, Чт, Пт, Сб
     ),
     Doctor(
-        fullName: "Аксенова\nАлина\nВячеславовна",
+        fullName: "Аксенова\nВиктория\nВячеславовна",
         speciality: "Детский стоматолог\nТерапевт",
         imageName: "Виктория",
         education: """
