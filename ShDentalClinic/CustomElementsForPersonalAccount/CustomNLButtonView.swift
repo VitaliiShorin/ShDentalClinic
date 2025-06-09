@@ -25,5 +25,5 @@ struct CustomNLButtonView<Destination: View>: View {
 }
 
 #Preview {
-    CustomNLButtonView(text: "Далее", destination: TestView())
+    CustomNLButtonView(text: "Далее", destination: EmptyView())
 }

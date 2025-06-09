@@ -33,4 +33,5 @@ struct AppointmentSchedulingView: View {
 #Preview {
     AppointmentSchedulingView()
         .environmentObject(BookedAppointmentsViewModel())
+        .environmentObject(CallbackRequestsViewModel())
 }

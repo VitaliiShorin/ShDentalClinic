@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var userVM: UserViewModel
     
     var body: some View {
         TabView {
@@ -26,7 +27,11 @@ struct ContentView: View {
                 Text("Запись на прием")
             }
             NavigationView {
-                WelcomeView()
+                if let _ = userVM.user {
+                    PersonalAccountView()
+                } else {
+                    WelcomeView()
+                }
             }
             .tabItem {
                 Image(systemName: "person")
@@ -40,4 +45,7 @@ struct ContentView: View {
     ContentView()
         .environmentObject(ReviewsViewModel())
         .environmentObject(BookedAppointmentsViewModel())
+        .environmentObject(UserViewModel())
+        .environmentObject(CallbackRequestsViewModel())
+        .environmentObject(AdminAppointmentsCopyStorage())
 }

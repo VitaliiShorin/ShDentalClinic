@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
-// 90 % Нужно добавить в кнопку передачу данных в личный кабинет админа. В остальном код готов
-// Форма для заявки на обратный звонок от клиники
+
 struct CallbackFormView: View {
     @State private var name = ""
     @State private var surname = ""
     @State private var phoneNumber = ""
     
     @State var showAlert = false
+    
+    @EnvironmentObject var callbackVM: CallbackRequestsViewModel
 
     private var isButtonActive: Bool {
         !name.isEmpty && !surname.isEmpty && phoneNumber.count >= 11
@@ -32,8 +33,8 @@ struct CallbackFormView: View {
                 .textContentType(.telephoneNumber)
                 .textFieldStyle(.roundedBorder)
             
-            // Здесь будет отправка данных в личный кабинет админа
             Button {
+                callbackVM.add(name: name, surname: surname, phoneNumber: phoneNumber)
                 name = ""
                 surname = ""
                 phoneNumber = ""
@@ -68,5 +69,5 @@ struct CallbackFormView: View {
 
 #Preview {
     CallbackFormView()
+        .environmentObject(CallbackRequestsViewModel())
 }
-

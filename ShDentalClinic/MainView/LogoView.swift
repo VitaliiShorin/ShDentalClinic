@@ -10,7 +10,7 @@ import SwiftUI
 struct LogoView: View {
     var body: some View {
         VStack {
-            Image("logo2")
+            Image("logo")
                 .resizable()
                 .scaledToFit()
                 .shadow(radius: 3)

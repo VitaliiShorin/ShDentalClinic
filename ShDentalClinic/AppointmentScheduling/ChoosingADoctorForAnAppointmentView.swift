@@ -17,7 +17,9 @@ struct ChoosingADoctorForAnAppointmentView: View {
     @State private var selectedHour: String? = nil
     @State private var isShowingConfirmation = false
     
+    @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var appointmentVM: BookedAppointmentsViewModel
+    @EnvironmentObject var appointmentCopyStorage: AdminAppointmentsCopyStorage
     
     var body: some View {
         VStack {
@@ -31,7 +33,7 @@ struct ChoosingADoctorForAnAppointmentView: View {
                 VStack(alignment: .leading) {
                     Text(doctor.fullName)
                         .font(.callout.bold())
-
+                    
                     Text(doctor.speciality)
                         .font(.footnote)
                         .padding(.top, 8)
@@ -48,7 +50,14 @@ struct ChoosingADoctorForAnAppointmentView: View {
             
             LazyVGrid(columns: gridColumns) {
                 ForEach(doctor.availableHours.filter { hour in
-                    !appointmentVM.isHourBooked(doctor: doctor, date: selectedDate, hour: hour)
+                    guard !appointmentVM.isHourBooked(doctor: doctor, date: selectedDate, hour: hour) else { return false }
+                    if Calendar.current.isDate(selectedDate, inSameDayAs: Date()) {
+                        if let slotDate = timeSlotDate(for: hour, on: selectedDate) {
+                            return slotDate > Date()
+                        }
+                        return false
+                    }
+                    return true
                 }, id: \.self) { hour in
                     Button(action: {
                         selectedHour = hour
@@ -76,14 +85,17 @@ struct ChoosingADoctorForAnAppointmentView: View {
             isPresented: $isShowingConfirmation,
             titleVisibility: .visible
         ) {
-            if let hour = selectedHour {
-                Button("Подтвердить запись на \(hour)")  {
+            if let hour = selectedHour, let user = userVM.user {
+                Button("Подтвердить запись на \(hour)") {
                     let newAppointment = BookedAppointment(
+                        userID: user.id,
                         doctorName: doctor.fullName,
+                        doctorImage: doctor.imageName,
                         date: selectedDate,
                         hour: hour
                     )
                     appointmentVM.add(newAppointment)
+                    appointmentCopyStorage.addCopy(patient: user, appointment: newAppointment)
                     showAlert = true
                     selectedHour = nil
                 }
@@ -93,6 +105,18 @@ struct ChoosingADoctorForAnAppointmentView: View {
         .alert("Запись успешно выполнена!", isPresented: $showAlert) {
             Button("OK", role: .cancel) {}
         }
+    }
+    
+    func timeSlotDate(for hour: String, on date: Date) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        guard let time = formatter.date(from: hour) else { return nil }
+        let calendar = Calendar.current
+        var comps = calendar.dateComponents([.year, .month, .day], from: date)
+        let hourMin = calendar.dateComponents([.hour, .minute], from: time)
+        comps.hour = hourMin.hour
+        comps.minute = hourMin.minute
+        return calendar.date(from: comps)
     }
 }
 

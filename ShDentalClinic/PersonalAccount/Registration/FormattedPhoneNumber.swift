@@ -7,7 +7,6 @@
 
 import Foundation
 
-// Доработать
 func extractDigits(_ text: String) -> String {
     text.filter { $0.isNumber }
 }

@@ -19,7 +19,7 @@ struct MainView: View {
                 VStack(spacing: 16) {
                     CustomSectionView(
                         text: "Записаться на прием",
-                        imageName: "ЗаписатьсяНаПрием3",
+                        imageName: "ЗаписатьсяНаПрием",
                         screen: .appointment,
                         size: .big,
                         direction: .horizontal
@@ -27,7 +27,7 @@ struct MainView: View {
                     
                     CustomSectionView(
                         text: "Стоимость услуг",
-                        imageName: "СтоимостьУслуг3",
+                        imageName: "СтоимостьУслуг",
                         screen: .price,
                         size: .big,
                         direction: .horizontal
@@ -36,14 +36,14 @@ struct MainView: View {
                     HStack(spacing: 16) {
                         CustomSectionView(
                             text: "Наши врачи",
-                            imageName: "НашиВрачи3",
+                            imageName: "НашиВрачи",
                             screen: .ourDoctors,
                             size: .medium,
                             direction: .horizontal
                         )
                         CustomSectionView(
                             text: "Отзывы",
-                            imageName: "ОтзывыОНас3",
+                            imageName: "ОтзывыОНас",
                             screen: .reviews,
                             size: .small,
                             direction: .vertical
@@ -52,7 +52,7 @@ struct MainView: View {
                     
                     CustomSectionView(
                         text: "Адрес клиники и контакты",
-                        imageName: "АдресКлиникиИКонтакты3",
+                        imageName: "АдресКлиникиИКонтакты",
                         screen: .address,
                         size: .big,
                         direction: .horizontal
