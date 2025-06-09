@@ -9,6 +9,11 @@ import SwiftUI
 // Готов
 struct ForgotPasswordView: View {
     @State private var phoneNumber = ""
+    @State private var nextScreen = false
+    
+    private var isButtonActive: Bool {
+        phoneNumber.count == 11
+    }
     
     var body: some View {
         ZStack {
@@ -30,8 +35,25 @@ struct ForgotPasswordView: View {
                     ))
                     .keyboardType(.phonePad)
                     
-                    CustomNLButtonView(text: "Далее", destination: SetNewPasswordView())
-                        .padding(.top)
+                    Button {
+                        nextScreen.toggle()
+                    } label: {
+                        Text("Далее")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(isButtonActive ? .green : .gray)
+                            .foregroundStyle(.white)
+                            .cornerRadius(15)
+                    }
+                    .disabled(!isButtonActive)
+                    .padding(.top)
+                                    
+                    NavigationLink(
+                        destination: SetNewPasswordView(),
+                        isActive: $nextScreen
+                    ) { EmptyView() }
+
                 }
                 .padding(.bottom)
                 

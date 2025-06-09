@@ -11,6 +11,7 @@ struct ReadAndWriteAReviewView: View {
     let doctor: Doctor
     
     @EnvironmentObject var reviewsVM: ReviewsViewModel
+    @EnvironmentObject var userVM: UserViewModel
     @State var selection = "1"
     
     var body: some View {
@@ -43,7 +44,8 @@ struct ReadAndWriteAReviewView: View {
             Spacer()
         } else {
             WriteAReviewView(doctor: doctor) { reviewText, stars in
-                reviewsVM.addReview(for: doctor, patientName: "Аноним", stars: stars, text: reviewText)
+                let patientName = userVM.user?.name ?? "Аноним"
+                reviewsVM.addReview(for: doctor, patientName: patientName, stars: stars, text: reviewText)
                 selection = "1"
             }
             Spacer()
@@ -63,4 +65,5 @@ struct ReadAndWriteAReviewView: View {
 #Preview {
     ReadAndWriteAReviewView(doctor: doctors[0])
         .environmentObject(ReviewsViewModel())
+        .environmentObject(UserViewModel())
 }

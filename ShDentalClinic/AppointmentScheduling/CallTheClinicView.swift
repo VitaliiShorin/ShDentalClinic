@@ -65,4 +65,5 @@ struct CallTheClinicView: View {
 
 #Preview {
     CallTheClinicView()
+        .environmentObject(CallbackRequestsViewModel())
 }

@@ -9,13 +9,17 @@ import Foundation
 
 struct BookedAppointment: Codable, Identifiable, Hashable {
     let id: UUID
+    let userID: UUID
     let doctorName: String
+    let doctorImage: String
     let date: Date
     let hour: String
 
-    init(id: UUID = UUID(), doctorName: String, date: Date, hour: String) {
+    init(id: UUID = UUID(), userID: UUID, doctorName: String, doctorImage: String, date: Date, hour: String) {
         self.id = id
+        self.userID = userID
         self.doctorName = doctorName
+        self.doctorImage = doctorImage
         self.date = date
         self.hour = hour
     }
@@ -50,13 +54,19 @@ class BookedAppointmentsViewModel: ObservableObject {
             $0.hour == hour
         }
     }
-
+    
+    func appointments(for userID: UUID) -> [BookedAppointment] {
+        bookedAppointments
+            .filter { $0.userID == userID }
+            .sorted { $0.date < $1.date }
+    }
+    
     private func save() {
         if let data = try? JSONEncoder().encode(bookedAppointments) {
             UserDefaults.standard.set(data, forKey: key)
         }
     }
-
+    
     private func load() {
         if let data = UserDefaults.standard.data(forKey: key),
            let loaded = try? JSONDecoder().decode([BookedAppointment].self, from: data) {

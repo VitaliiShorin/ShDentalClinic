@@ -13,7 +13,10 @@ struct ReviewsAboutTheDoctorView: View {
     let numberOfStars: String
     let reviewText: String
     
+    @EnvironmentObject var userVM: UserViewModel
+    
     var body: some View {
+        
         VStack(spacing: 16) {
             createSectionForReview(
                 patientName: patientName,
@@ -77,4 +80,5 @@ struct ReviewsAboutTheDoctorView: View {
 #Preview {
     ReviewsAboutTheDoctorView(patientName: "Виктория", date: "5 дней назад", numberOfStars: "5", reviewText: "Здесь будет текст отзыва пациента")
         .environmentObject(ReviewsViewModel())
+        .environmentObject(UserViewModel())
 }
