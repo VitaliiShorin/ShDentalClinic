@@ -24,7 +24,14 @@ struct DoctorsBySpecialtyView: View {
             doctor.relatedSpecialties.contains(specialty)
             && doctor.workingDays.contains(weekDay)
             && doctor.availableHours.contains(where: { hour in
-                !appointmentVM.isHourBooked(doctor: doctor, date: selectedDate, hour: hour)
+                guard !appointmentVM.isHourBooked(doctor: doctor, date: selectedDate, hour: hour) else { return false }
+                if Calendar.current.isDate(selectedDate, inSameDayAs: Date()) {
+                    if let slotDate = timeSlotDate(for: hour, on: selectedDate) {
+                        return slotDate > Date()
+                    }
+                    return false
+                }
+                return true
             })
         }
     }
@@ -35,7 +42,7 @@ struct DoctorsBySpecialtyView: View {
             
             ScrollView {
                 if filteredDoctors.isEmpty {
-                    Text("Нет специалистов этой специальности в выбранный день")
+                    Text("Свободное время для записи отсутствует. Выберите другую дату.")
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.secondary)
                         .padding()

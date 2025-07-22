@@ -32,8 +32,10 @@ struct MyAppointmentsView: View {
                             .padding(.top)
                     } else {
                         ForEach(myAppointments) { appointment in
-                            AppointmentCardView(appointment: appointment)
-                                .padding(.bottom, 5)
+                            AppointmentCardView(appointment: appointment, onCancel: {
+                                appointmentVM.remove(appointment)
+                            })
+                            .padding(.bottom, 5)
                         }
                     }
                 }
