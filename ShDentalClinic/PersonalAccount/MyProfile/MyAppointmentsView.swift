@@ -10,7 +10,12 @@ import SwiftUI
 struct MyAppointmentsView: View {
     @EnvironmentObject var appointmentVM: BookedAppointmentsViewModel
     @EnvironmentObject var userVM: UserViewModel
-
+    
+    var myAppointments: [BookedAppointment] {
+        guard let user = userVM.user else { return [] }
+        return appointmentVM.appointments(for: user.id)
+    }
+    
     var body: some View {
         ZStack {
             LinearGradientView()
@@ -19,23 +24,18 @@ struct MyAppointmentsView: View {
                 VStack {
                     Text("Мои записи на прием")
                         .font(.title3.bold())
-                        .padding(.vertical)
+                        .padding(.bottom)
                     
-                    if let user = userVM.user {
-                        let myAppointments = appointmentVM.appointments(for: user.id)
-                        if myAppointments.isEmpty {
-                            Text("Записей на прием еще нет.")
-                                .foregroundStyle(.secondary)
-                                .padding(.top)
-                        } else {
-                            ForEach(myAppointments) { appt in
-                                AppointmentCardView(appointment: appt)
-                                    .padding(.bottom, 5)
-                            }
+                    if myAppointments.isEmpty {
+                        Text("Записей на прием еще нет.")
+                            .foregroundStyle(.secondary)
+                            .padding(.top)
+                    } else {
+                        ForEach(myAppointments) { appointment in
+                            AppointmentCardView(appointment: appointment)
+                                .padding(.bottom, 5)
                         }
                     }
-                    
-                    Spacer()
                 }
                 .padding(.horizontal)
             }

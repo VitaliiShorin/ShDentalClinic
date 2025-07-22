@@ -12,47 +12,59 @@ struct ReadAndWriteAReviewView: View {
     
     @EnvironmentObject var reviewsVM: ReviewsViewModel
     @EnvironmentObject var userVM: UserViewModel
-    @State var selection = "1"
+    @State var selection = 0
+    
+    var doctorReviews: [DoctorReview] {
+        reviewsVM.reviews(forDoctor: doctor.fullName)
+    }
     
     var body: some View {
-        Picker("", selection: $selection) {
-            Text("Прочитать").tag("1")
-            Text("Написать").tag("2")
-        }
-        .pickerStyle(.segmented)
-        .padding()
-        
-        if selection == "1" {
-            let doctorReviews = reviewsVM.reviews(forDoctor: doctor.fullName)
-            if doctorReviews.isEmpty {
-                Text("Пока нет отзывов. Оставьте свой!").foregroundStyle(.gray)
-            } else {
-                ScrollView {
-                    VStack(spacing: 16) {
-                        ForEach(doctorReviews) { review in
-                            ReviewsAboutTheDoctorView(
-                                patientName: review.patientName,
-                                date: Self.dateString(review.date),
-                                numberOfStars: "\(review.numberOfStars)",
-                                reviewText: review.reviewText
-                            )
+        VStack {
+            Picker("", selection: $selection) {
+                Text("Прочитать").tag(0)
+                Text("Написать").tag(1)
+            }
+            .pickerStyle(.segmented)
+            .padding()
+            
+            if selection == 0 {
+                if doctorReviews.isEmpty {
+                    Text("Пока нет отзывов. Оставьте свой!")
+                        .foregroundStyle(.gray)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                } else {
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            ForEach(doctorReviews) { review in
+                                ReviewsAboutTheDoctorView(
+                                    patientName: review.patientName,
+                                    date: Self.dateStr(review.date),
+                                    numberOfStars: "\(review.numberOfStars)",
+                                    reviewText: review.reviewText
+                                )
+                            }
                         }
+                        .padding()
                     }
-                    .padding()
+                }
+            } else {
+                WriteAReviewView(doctor: doctor) {
+                    reviewText,
+                    stars in
+                    let patientName = userVM.user?.name ?? "Аноним"
+                    reviewsVM.addReview(
+                        for: doctor,
+                        patientName: patientName,
+                        stars: stars,
+                        text: reviewText
+                    )
+                    selection = 0
                 }
             }
-            Spacer()
-        } else {
-            WriteAReviewView(doctor: doctor) { reviewText, stars in
-                let patientName = userVM.user?.name ?? "Аноним"
-                reviewsVM.addReview(for: doctor, patientName: patientName, stars: stars, text: reviewText)
-                selection = "1"
-            }
-            Spacer()
         }
     }
     
-    static func dateString(_ date: Date) -> String {
+    static func dateStr(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
@@ -60,7 +72,6 @@ struct ReadAndWriteAReviewView: View {
         return formatter.string(from: date)
     }
 }
-
 
 #Preview {
     ReadAndWriteAReviewView(doctor: doctors[0])

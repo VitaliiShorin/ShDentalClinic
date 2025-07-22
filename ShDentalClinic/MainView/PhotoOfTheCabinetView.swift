@@ -8,41 +8,44 @@
 import SwiftUI
 
 struct PhotoOfTheCabinetView: View {
+    
     var body: some View {
         ZStack {
-            GeometryReader { geometry in
-                ZStack {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 5) {
-                            ForEach(["001", "002", "003", "004"], id: \.self) { imageName in
-                                Image(imageName)
-                                    .resizable()
-                                    .frame(width: geometry.size.width, height: geometry.size.width / 1.52)
-                            }
-                        }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 5) {
+                    ForEach(["01", "02", "03"], id: \.self) { image in
+                        Image(image)
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .frame(maxHeight: .infinity)
                     }
-                    HStack {
-                        Image(systemName: "chevron.left")
-                            .foregroundStyle(.white)
-                            .opacity(0.5)
-                            .font(.system(size: 30))
-                            .frame(width: geometry.size.width / 7.9, height: geometry.size.width / 1.52)
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .foregroundStyle(.white)
-                            .opacity(0.5)
-                            .font(.system(size: 30))
-                            .frame(width: geometry.size.width / 7.9, height: geometry.size.width / 1.52)
-                    }
-                    .frame(width: geometry.size.width, height: geometry.size.width / 1.52)
                 }
             }
+            HStack {
+                Image(systemName: "chevron.left")
+                    .foregroundStyle(.white)
+                    .opacity(0.6)
+                    .font(.system(size: 30))
+                    .frame(width: 44, height: 44)
+                    .padding(.leading, 12)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.white)
+                    .opacity(0.6)
+                    .font(.system(size: 30))
+                    .frame(width: 44, height: 44)
+                    .padding(.trailing, 12)
+            }
+            .frame(maxHeight: .infinity)
         }
-        .frame(height: UIScreen.main.bounds.width / 1.52)
+        .aspectRatio(1.52, contentMode: .fit)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
 #Preview {
     PhotoOfTheCabinetView()
 }
-

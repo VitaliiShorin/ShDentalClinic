@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// Generic-версия
+
 struct CustomNLButtonView<Destination: View>: View {
     let text: String
     let destination: Destination

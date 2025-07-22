@@ -11,59 +11,56 @@ struct CallbackFormView: View {
     @State private var name = ""
     @State private var surname = ""
     @State private var phoneNumber = ""
-    
     @State var showAlert = false
     
     @EnvironmentObject var callbackVM: CallbackRequestsViewModel
-
+    
     private var isButtonActive: Bool {
         !name.isEmpty && !surname.isEmpty && phoneNumber.count >= 11
     }
-
+    
     var body: some View {
         VStack(spacing: 16) {
             TextField("Введите имя", text: $name)
                 .textFieldStyle(.roundedBorder)
-
+            
             TextField("Введите фамилию", text: $surname)
                 .textFieldStyle(.roundedBorder)
-
-            TextField("Контактный номер", text: $phoneNumber)
-                .keyboardType(.phonePad)
-                .textContentType(.telephoneNumber)
-                .textFieldStyle(.roundedBorder)
+            
+            TextField("Контактный номер", text: Binding(
+                get: { formattedPhoneNumber(phoneNumber) },
+                set: { phoneNumber = extractDigits($0) }
+            ))
+            .keyboardType(.phonePad)
+            .textContentType(.telephoneNumber) // Предложение IOS по автозаполнению
+            .textFieldStyle(.roundedBorder)
             
             Button {
                 callbackVM.add(name: name, surname: surname, phoneNumber: phoneNumber)
-                name = ""
-                surname = ""
-                phoneNumber = ""
                 showAlert.toggle()
-                hideKeyboard()
+                clearForm()
             } label: {
                 Text("Отправить")
                     .foregroundStyle(.white)
                     .padding(.horizontal, 32)
                     .padding(.vertical, 12)
                     .background(isButtonActive ? .blue : .gray)
+                    .animation(.easeInOut(duration: 0.2), value: isButtonActive)
                     .cornerRadius(15)
             }
             .disabled(!isButtonActive)
-            .padding(.top, 16)
+            .padding(.top)
             .alert("Заявка успешно отправлена!", isPresented: $showAlert) {
                 Button("OK", role: .cancel) {}
             }
         }
+        .hideKeyboardOnTap()
     }
     
-    // Скрытие клавиатуры после отправки данных
-    private func hideKeyboard() {
-        UIApplication.shared.sendAction(
-            #selector(UIResponder.resignFirstResponder),
-            to: nil,
-            from: nil,
-            for: nil
-        )
+    private func clearForm() {
+        name = ""
+        surname = ""
+        phoneNumber = ""
     }
 }
 

@@ -10,51 +10,44 @@ import SwiftUI
 struct AboutTheDoctorView: View {
     let doctor: Doctor
     
-    @State var selection = "1"
+    @State var selection = 0
     @EnvironmentObject var reviewsVM: ReviewsViewModel
     
     var body: some View {
-        let width = UIScreen.main.bounds.width - 32
-        let height = width
-        
         ScrollView(.vertical, showsIndicators: false) {
             VStack {
-                HStack {
-                    Spacer()
+                HStack(alignment: .top, spacing: 16) {
                     Image(doctor.imageName)
                         .resizable()
-                        .frame(width: width / 2.1, height: height / 2.1)
+                        .scaledToFit()
+                        .frame(width: 170)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .shadow(radius: 5)
-                    Spacer()
-                    VStack {
-                        Spacer()
-                        Text(doctor.fullName)
-                            .font(.callout.weight(.bold))
-                            .frame(width: width / 2.2, height: height / 5.7, alignment: .topLeading)
-                            .padding(.leading, 10)
+                    
+                    VStack(alignment: .leading) {
+                        Text(doctor.name)
+                        Text(doctor.surname)
+                        Text(doctor.patronymic)
                         Text(doctor.speciality)
                             .font(.subheadline)
-                            .frame(width: width / 2.2, height: height / 4.2, alignment: .topLeading)
-                            .padding(.leading, 10)
-                        Spacer()
+                            .padding(.top, 8)
                     }
-                    .frame(width: width / 2.1, height: height / 2.1)
+                    .font(.callout.weight(.bold))
+                    
                     Spacer()
                 }
-                .frame(width: width, height: height / 2.1)
+                .padding(.horizontal)
+                .padding(.top, 8)
                 
                 Picker("", selection: $selection) {
-                    Text("О враче").tag("1")
-                    Text("Отзывы").tag("2")
+                    Text("О враче").tag(0)
+                    Text("Отзывы").tag(1)
                 }
                 .pickerStyle(.segmented)
-                .padding(.top, 8)
-            }
-            .frame(width: width, height: height / 1.5)
-            
-            VStack {
-                if selection == "1" {
+                .padding(.horizontal)
+                .padding(.vertical, 8)
+                
+                if selection == 0 {
                     AboutTheDoctorEducationView(doctor: doctor)
                 } else {
                     let doctorReviews = reviewsVM.reviews(forDoctor: doctor.fullName)
@@ -72,9 +65,9 @@ struct AboutTheDoctorView: View {
                                 )
                             }
                         }
+                        .padding(.horizontal)
                     }
                 }
-                Spacer()
             }
         }
     }
@@ -87,8 +80,8 @@ struct AboutTheDoctorView: View {
         return formatter.string(from: date)
     }
 }
-    
+
 #Preview {
-    AboutTheDoctorView(doctor: doctors[0])
+    AboutTheDoctorView(doctor: doctors[3])
         .environmentObject(ReviewsViewModel())
 }

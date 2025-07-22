@@ -23,9 +23,13 @@ class AdminAppointmentsCopyStorage: ObservableObject {
     
     private let key = "admin_appointments_copy"
     
-    init() {
-        load()
-    }
+        init() {
+            load()
+        }
+//    init() {
+//        self.copiedAppointments = []
+//        save()
+//    }
     
     func addCopy(patient: User, appointment: BookedAppointment) {
         let copy = AdminAppointmentCopy(
@@ -36,7 +40,6 @@ class AdminAppointmentsCopyStorage: ObservableObject {
             date: appointment.date,
             hour: appointment.hour
         )
-        // Не дублируем одну и ту же запись
         if !copiedAppointments.contains(where: { $0.id == appointment.id }) {
             copiedAppointments.append(copy)
         }

@@ -13,15 +13,14 @@ struct OurDoctorsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                ForEach(doctors, id: \.fullName) { doctor in
+                ForEach(doctors) { doctor in
                     SectionForDoctorView(doctor: doctor)
                 }
             }
-            .padding()
+            .padding(.vertical)
         }
         .navigationTitle("Наши врачи")
-        .padding(.bottom, 1)
-        .padding(.top, 1)
+        .padding([.top, .bottom], 1)
     }
 }
 

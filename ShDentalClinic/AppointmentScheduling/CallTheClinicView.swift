@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-// 100 %
-// Раздел "Связаться с клиникой"
+
 struct CallTheClinicView: View {
     
     var body: some View {
@@ -33,12 +32,12 @@ struct CallTheClinicView: View {
                     .multilineTextAlignment(.center)
                     .padding(.top, 16)
                 
-                // Форма для заявки на обратный звонок от клиники
                 CallbackFormView()
             }
             .padding()
             .padding(.top)
         }
+        .hideKeyboardOnTap()
     }
     
     private func createSection(

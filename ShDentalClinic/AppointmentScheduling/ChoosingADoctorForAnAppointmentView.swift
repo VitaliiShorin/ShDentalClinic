@@ -10,10 +10,10 @@ import SwiftUI
 struct ChoosingADoctorForAnAppointmentView: View {
     let doctor: Doctor
     let gridColumns = Array(repeating: GridItem(), count: 4)
-    let width = UIScreen.main.bounds.width - 32
     
     @Binding var selectedDate: Date
     @State var showAlert = false
+    @State private var showAuthAlert = false
     @State private var selectedHour: String? = nil
     @State private var isShowingConfirmation = false
     
@@ -27,13 +27,16 @@ struct ChoosingADoctorForAnAppointmentView: View {
                 Image(doctor.imageName)
                     .resizable()
                     .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .frame(width: width / 2.5, height: width / 2.5)
+                    .frame(width: 140, height: 140)
                     .padding(.trailing)
                 
                 VStack(alignment: .leading) {
-                    Text(doctor.fullName)
+                    Text(doctor.surname)
                         .font(.callout.bold())
-                    
+                    Text(doctor.name)
+                        .font(.callout.bold())
+                    Text(doctor.patronymic)
+                        .font(.callout.bold())
                     Text(doctor.speciality)
                         .font(.footnote)
                         .padding(.top, 8)
@@ -49,19 +52,29 @@ struct ChoosingADoctorForAnAppointmentView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             LazyVGrid(columns: gridColumns) {
-                ForEach(doctor.availableHours.filter { hour in
-                    guard !appointmentVM.isHourBooked(doctor: doctor, date: selectedDate, hour: hour) else { return false }
-                    if Calendar.current.isDate(selectedDate, inSameDayAs: Date()) {
-                        if let slotDate = timeSlotDate(for: hour, on: selectedDate) {
-                            return slotDate > Date()
+                ForEach(
+                    doctor.availableHours.filter { hour in
+                        guard !appointmentVM.isHourBooked(
+                            doctor: doctor,
+                            date: selectedDate,
+                            hour: hour
+                        ) else { return false }
+                        if Calendar.current.isDate(selectedDate, inSameDayAs: Date()) {
+                            if let slotDate = timeSlotDate(for: hour, on: selectedDate) {
+                                return slotDate > Date()
+                            }
+                            return false
                         }
-                        return false
-                    }
-                    return true
-                }, id: \.self) { hour in
+                        return true
+                    },
+                    id: \.self) { hour in
                     Button(action: {
-                        selectedHour = hour
-                        isShowingConfirmation.toggle()
+                        if userVM.user == nil {
+                            showAuthAlert.toggle()
+                        } else {
+                            selectedHour = hour
+                            isShowingConfirmation.toggle()
+                        }
                     }) {
                         Text(hour)
                             .font(.callout.bold())
@@ -76,7 +89,6 @@ struct ChoosingADoctorForAnAppointmentView: View {
             }
         }
         .padding()
-        .frame(width: width)
         .background(.white)
         .cornerRadius(15)
         .shadow(radius: 4)
@@ -105,8 +117,17 @@ struct ChoosingADoctorForAnAppointmentView: View {
         .alert("Запись успешно выполнена!", isPresented: $showAlert) {
             Button("OK", role: .cancel) {}
         }
+        .alert("Пожалуйста, зайдите в личный кабинет", isPresented: $showAuthAlert) {
+            Button("OK", role: .cancel) {}
+        }
     }
     
+    /// Возвращает объект Date, объединяя заданную дату с временем, указанным в строке hour (формат "HH:mm").
+    /// Если строка времени некорректна — возвращает nil.
+    /// - Parameters:
+    /// - hour: Время в формате "HH:mm" (например, "09:30").
+    /// - date: Дата, к которой нужно подставить указанное время.
+    /// - Returns: Объединённая дата и время в виде объекта Date или nil, если строка времени неверная.
     func timeSlotDate(for hour: String, on date: Date) -> Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"

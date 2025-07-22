@@ -6,18 +6,8 @@
 //
 
 import SwiftUI
-import MapKit
 
 struct ClinicAddressAndContactsView: View {
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 55.592510, longitude: 37.593354),
-        span: MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)
-    )
-    
-    struct PointAnnotation: Identifiable {
-        let id = UUID()
-        let coordinate: CLLocationCoordinate2D
-    }
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -56,18 +46,20 @@ struct ClinicAddressAndContactsView: View {
                     image: "text.book.closed",
                     destination: RegulatoryDocumentsView()
                 )
-                
-                Spacer()
             }
+            .padding(.horizontal)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 7)
-
-            createMapView()
-                .frame(height: UIScreen.main.bounds.width / 1.5)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
+            
+            MapView()
         }
     }
     
-    private func createSection(image: String, title: String, information: String) -> some View {
+    private func createSection(
+        image: String,
+        title: String,
+        information: String
+    ) -> some View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: image)
@@ -76,14 +68,18 @@ struct ClinicAddressAndContactsView: View {
                     .font(.body.bold())
             }
             .padding(.bottom, 2)
+            
             Text(information)
                 .font(.callout)
                 .padding(.leading, 12)
         }
-        .frame(width: UIScreen.main.bounds.width - 32, alignment: .leading)
     }
     
-    private func navigationLinkSection(title: String, image: String, destination: some View) -> some View {
+    private func navigationLinkSection(
+        title: String,
+        image: String,
+        destination: some View
+    ) -> some View {
         NavigationLink(destination: destination) {
             HStack {
                 Image(systemName: image)
@@ -93,13 +89,6 @@ struct ClinicAddressAndContactsView: View {
                     .font(.headline)
             }
             .padding(.vertical, 2)
-        }
-    }
-
-    private func createMapView() -> some View {
-        let annotations = [PointAnnotation(coordinate: CLLocationCoordinate2D(latitude: 55.592510, longitude: 37.593354))]
-        return Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: true, annotationItems: annotations) { item in
-            MapPin(coordinate: item.coordinate, tint: .red)
         }
     }
 }

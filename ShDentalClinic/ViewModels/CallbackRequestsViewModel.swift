@@ -25,7 +25,15 @@ class CallbackRequestsViewModel: ObservableObject {
     init() {
         load()
     }
-
+//        init() {
+//            self.requests = []
+//            save()
+//        }
+    
+    var sortedRequests: [CallbackRequest] {
+        requests.sorted { $0.created > $1.created }
+    }
+    
     func add(name: String, surname: String, phoneNumber: String) {
         let request = CallbackRequest(
             id: UUID(),

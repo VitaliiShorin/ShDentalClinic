@@ -38,16 +38,35 @@ struct PersonalAccountView: View {
                     .padding(.bottom, 32)
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        createSection(image: "person.circle.fill", title: "Пол:", information: user.gender)
+                        createSection(
+                            image: "person.circle.fill",
+                            title: "Пол:",
+                            information: user.gender
+                        )
                         
-                        createSection(image: "birthday.cake.fill", title: "День рождения:", information: DateFormatter.localizedString(from: user.birthDate, dateStyle: .long, timeStyle: .none))
+                        createSection(
+                            image: "birthday.cake.fill",
+                            title: "День рождения:",
+                            information: DateFormatter.localizedString(
+                                from: user.birthDate,
+                                dateStyle: .long,
+                                timeStyle: .none
+                            )
+                        )
                         
-                        createSection(image: "phone", title: "Номер телефона:", information: user.phone)
+                        createSection(
+                            image: "phone",
+                            title: "Номер телефона:",
+                            information: user.phone
+                        )
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    CustomNLButtonView(text: "Мои записи на прием", destination: MyAppointmentsView())
-                        .padding(.top, 32)
+                    CustomNLButtonView(
+                        text: "Мои записи на прием",
+                        destination: MyAppointmentsView()
+                    )
+                    .padding(.top, 32)
                 }
                 
                 Spacer()
@@ -56,7 +75,11 @@ struct PersonalAccountView: View {
         }
     }
     
-    private func createSection(image: String, title: String, information: String) -> some View {
+    private func createSection(
+        image: String,
+        title: String,
+        information: String
+    ) -> some View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: image)
@@ -65,6 +88,7 @@ struct PersonalAccountView: View {
                     .font(.body.bold())
             }
             .padding(.bottom, 2)
+            
             Text(information)
                 .font(.callout)
                 .padding(.leading, 12)

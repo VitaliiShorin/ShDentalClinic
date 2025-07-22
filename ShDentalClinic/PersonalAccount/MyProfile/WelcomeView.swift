@@ -16,8 +16,6 @@ struct WelcomeView: View {
     @State private var phoneNumber = ""
     @State private var password = ""
     @State private var errorMessage = ""
-    @State private var showError = false
-    @State private var goToNextView = false
     @State private var showPassword = false
     @State private var nextView: Destination?
     
@@ -40,7 +38,7 @@ struct WelcomeView: View {
                         
                         CustomTextFieldView(placeholder: "+7", text: Binding(
                             get: { formattedPhoneNumber(phoneNumber) },
-                            set: { newValue in self.phoneNumber = extractDigits(newValue) }
+                            set: { phoneNumber = extractDigits($0) }
                         ))
                         .keyboardType(.phonePad)
                         
@@ -73,16 +71,19 @@ struct WelcomeView: View {
                             .padding(.trailing, 8)
                     }
                     
-                    Text(errorMessage)
-                        .foregroundStyle(.red)
-                        .font(.caption)
-                        .padding(.top)
-                        .frame(height: 16)
-                        .opacity(showError ? 1 : 0)
+                    if !errorMessage.isEmpty {
+                        Text(errorMessage)
+                            .foregroundStyle(.red)
+                            .font(.caption)
+                            .padding(.top)
+                            .transition(.opacity)
+                    } else {
+                        Color.clear.frame(height: 16) 
+                    }
                     
                     VStack(spacing: 12) {
                         Button(action: {
-                            phoneAndPasswordFieldValidation()
+                            loginAction()
                         }) {
                             Text("Вход")
                                 .font(.headline)
@@ -123,32 +124,30 @@ struct WelcomeView: View {
                 .padding(.top, 30)
             }
         }
+        .hideKeyboardOnTap()
     }
     
-    // Проверка поля телефон и пароль
-    // Нужен еще функционал "Телефон и пароль указаны неверно" при идентификации
-    private func phoneAndPasswordFieldValidation() {
-            let trimmed = phoneNumber.trimmingCharacters(in: .whitespaces)
-            let phone = extractDigits(trimmed)
-            
-            // Данные для входа администратора
-            let adminPhone = extractDigits("+7 999 999 9999")
-            let adminPassword = "999999"
-            
-            if phoneNumber.isEmpty || password.isEmpty {
-                errorMessage = "Поля Телефон и Пароль не могут быть пустыми"
-                showError = true
-            } else if phone == adminPhone && password == adminPassword {
-                showError = false
-                nextView = .admin
-            } else if userVM.checkCredentials(phone: phone, password: password) {
-                showError = false
-                nextView = .user
-            } else {
-                errorMessage = "Телефон или пароль введены неверно"
-                showError = true
-            }
+    private func loginAction() {
+        let phone = extractDigits(phoneNumber.trimmingCharacters(in: .whitespaces))
+        
+        let adminPhone = extractDigits("+7 999 999 9999")
+        let adminPassword = "999999"
+        
+        guard !phoneNumber.isEmpty, !password.isEmpty else {
+            errorMessage = "Поля Телефон и Пароль не могут быть пустыми"
+            return
         }
+        
+        if phone == adminPhone && password == adminPassword {
+            errorMessage = ""
+            nextView = .admin
+        } else if userVM.checkCredentials(phone: phone, password: password) {
+            errorMessage = ""
+            nextView = .user
+        } else {
+            errorMessage = "Телефон или пароль указаны неверно"
+        }
+    }
 }
 
 #Preview {

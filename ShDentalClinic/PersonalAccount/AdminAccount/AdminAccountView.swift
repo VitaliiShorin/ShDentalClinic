@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AdminAccountView: View {
-    @State var selection = "0"
+    @State var selection = 0
     @State private var showAlert = false
     @State private var navigateToWelcome = false
     @EnvironmentObject var callbackVM: CallbackRequestsViewModel
@@ -28,7 +28,10 @@ struct AdminAccountView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: WelcomeView().navigationBarBackButtonHidden(true), isActive: $navigateToWelcome) { EmptyView() }
+                NavigationLink(
+                    destination: WelcomeView().navigationBarBackButtonHidden(true),
+                    isActive: $navigateToWelcome
+                ) { EmptyView() }
                 
                 Button {
                     navigateToWelcome.toggle()
@@ -36,27 +39,21 @@ struct AdminAccountView: View {
                     Image(systemName: "rectangle.portrait.and.arrow.right.fill")
                 }
             }
-            .padding(.horizontal)
-            .padding(.top)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
+            .padding([.horizontal, .top])
             
             Picker("", selection: $selection) {
-                Text("Связаться с пациентами").tag("0")
-                Text("Все записи на прием").tag("1")
+                Text("Связаться с пациентами").tag(0)
+                Text("Все записи на прием").tag(1)
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)
             .padding(.bottom, 5)
             
-            ZStack {
-                if selection == "0" {
-                    ContactPatientsView()
-                } else {
-                    AllAppointmentsView()
-                }
+            if selection == 0 {
+                ContactPatientsView()
+            } else {
+                AllAppointmentsView()
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             
             Button {
                 showAlert.toggle()
@@ -76,7 +73,7 @@ struct AdminAccountView: View {
                     title: Text("Вы уверены, что хотите очистить список?"),
                     primaryButton: .cancel(),
                     secondaryButton: .destructive(Text("Очистить"), action: {
-                        if selection == "0" {
+                        if selection == 0 {
                             callbackVM.clearAll()
                         } else {
                             appointmentCopyStorage.clearAll()
@@ -87,7 +84,6 @@ struct AdminAccountView: View {
         }
     }
 }
-
 
 #Preview {
     AdminAccountView()

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-// Полностью переработан и готов
 // Основные направления
 struct MainAreas: Identifiable {
     let id = UUID()

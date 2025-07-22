@@ -16,36 +16,14 @@ struct ReviewsAboutTheDoctorView: View {
     @EnvironmentObject var userVM: UserViewModel
     
     var body: some View {
-        
-        VStack(spacing: 16) {
-            createSectionForReview(
-                patientName: patientName,
-                date: date,
-                numberOfStars: numberOfStars,
-                reviewText: reviewText
-            )
-        }
-    }
-    
-    private func createSectionForReview(
-        patientName: String,
-        date: String,
-        numberOfStars: String,
-        reviewText: String
-    ) -> some View {
-        let width = UIScreen.main.bounds.width - 48
-        
-        return VStack(alignment: .leading) {
+        VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 Image(systemName: "ellipsis.bubble")
                     .font(.title)
                     .foregroundStyle(.blue)
-                    .scaledToFit()
                 VStack(alignment: .leading) {
                     Text(patientName)
-                        .font(.subheadline.weight(.bold))
-                        .fontWeight(.bold)
-                    
+                        .font(.subheadline.bold())
                     Text(date)
                         .font(.footnote)
                 }
@@ -56,21 +34,16 @@ struct ReviewsAboutTheDoctorView: View {
                     Image(systemName: "star.fill")
                         .font(.body)
                         .foregroundStyle(.gold)
-                        .scaledToFit()
                     Text(numberOfStars)
                         .font(.body)
                 }
             }
             .padding(.bottom, 8)
             
-            HStack {
-                Text(reviewText)
-                    .font(.subheadline)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            Text(reviewText)
+                .font(.subheadline)
         }
         .padding()
-        .frame(width: width)
         .background(.white)
         .cornerRadius(15)
         .shadow(radius: 4)
@@ -78,7 +51,12 @@ struct ReviewsAboutTheDoctorView: View {
 }
 
 #Preview {
-    ReviewsAboutTheDoctorView(patientName: "Виктория", date: "5 дней назад", numberOfStars: "5", reviewText: "Здесь будет текст отзыва пациента")
+    ReviewsAboutTheDoctorView(
+        patientName: "Виктория",
+        date: "5 дней назад",
+        numberOfStars: "5",
+        reviewText: "Здесь будет текст отзыва пациента"
+    )
         .environmentObject(ReviewsViewModel())
         .environmentObject(UserViewModel())
 }

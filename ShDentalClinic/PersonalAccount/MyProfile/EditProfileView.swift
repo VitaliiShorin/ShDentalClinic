@@ -6,19 +6,17 @@
 //
 
 import SwiftUI
-// Изменить профиль
+
 struct EditProfileView: View {
     @State private var oldPassword = ""
     @State private var newPassword = ""
     @State private var repeatPassword = ""
-    @State private var errorText = ""
-    @State private var showPassword = false
     @State private var showError = false
-    @State private var passwordChanged = false
     @State private var showAlertDelete = false
     @State private var showAlertLogout = false
     @State private var deleted = false
     @State private var logout = false
+    @State private var showSuccessAlert = false
     
     @EnvironmentObject var userVM: UserViewModel
     
@@ -37,85 +35,29 @@ struct EditProfileView: View {
                     Text("Изменить пароль")
                         .font(.headline)
                     
-                    Text("Cтарый пароль:")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                    PasswordInputFieldView(
+                        title: "Cтарый пароль:",
+                        text: $oldPassword,
+                        error: showError ? "Неверный пароль" : nil
+                    )
                     
-                    ZStack(alignment: .trailing) {
-                        if showPassword {
-                            CustomTextFieldView(placeholder: "", text: $oldPassword)
-                        } else {
-                            CustomSecureFieldView(placeholder: "", text: $oldPassword)
-                        }
-                        
-                        Button {
-                            showPassword.toggle()
-                        } label: {
-                            Image(systemName: showPassword ? "eye.slash" : "eye")
-                                .foregroundStyle(.gray)
-                        }
-                        .padding(.trailing, 12)
-                    }
+                    PasswordInputFieldView(
+                        title: "Установите новый пароль:",
+                        text: $newPassword,
+                        error: newPassword.count < 6 && !newPassword.isEmpty ? "Пароль должен содержать не менее 6 символов" : nil
+                    )
                     
-                    Text("Неверный пароль")
-                        .foregroundStyle(.red)
-                        .font(.caption)
-                        .opacity(showError ? 1 : 0)
-                    
-                    Text("Установите новый пароль:")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    
-                    ZStack(alignment: .trailing) {
-                        if showPassword {
-                            CustomTextFieldView(placeholder: "", text: $newPassword)
-                        } else {
-                            CustomSecureFieldView(placeholder: "", text: $newPassword)
-                        }
-                        
-                        Button {
-                            showPassword.toggle()
-                        } label: {
-                            Image(systemName: showPassword ? "eye.slash" : "eye")
-                                .foregroundStyle(.gray)
-                        }
-                        .padding(.trailing, 12)
-                    }
-                    
-                    Text("Пароль должен содержать не менее 6 символов")
-                        .foregroundStyle(.red)
-                        .font(.caption)
-                        .opacity(newPassword.count < 6 ? 1 : 0)
-                    
-                    Text("Повторите новый пароль:")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    
-                    ZStack(alignment: .trailing) {
-                        if showPassword {
-                            CustomTextFieldView(placeholder: "", text: $repeatPassword)
-                        } else {
-                            CustomSecureFieldView(placeholder: "", text: $repeatPassword)
-                        }
-                        
-                        Button {
-                            showPassword.toggle()
-                        } label: {
-                            Image(systemName: showPassword ? "eye.slash" : "eye")
-                                .foregroundStyle(.gray)
-                        }
-                        .padding(.trailing, 12)
-                    }
-                    
-                    Text("Пароли должны совпадать")
-                        .foregroundStyle(.red)
-                        .font(.caption)
-                        .opacity(newPassword != repeatPassword ? 1 : 0)
+                    PasswordInputFieldView(
+                        title: "Повторите новый пароль:",
+                        text: $repeatPassword,
+                        error: newPassword != repeatPassword && !repeatPassword.isEmpty ? "Пароли должны совпадать" : nil
+                    )
                     
                     Button {
                         if userVM.changePassword(oldPassword: oldPassword, newPassword: newPassword) {
                             showError = false
-                            passwordChanged = true
+                            showSuccessAlert = true
+                            resetFields()
                         } else {
                             showError = true
                         }
@@ -130,12 +72,11 @@ struct EditProfileView: View {
                     }
                     .disabled(!isButtonActive)
                     .padding(.top, 10)
-                    
-                    if passwordChanged {
-                        Text("Пароль успешно изменен")
-                            .foregroundColor(.green)
-                            .font(.caption)
-                            .padding(.top, 10)
+                    .alert(isPresented: $showSuccessAlert) {
+                        Alert(
+                            title: Text("Пароль успешно изменён"),
+                            dismissButton: .default(Text("OK"))
+                        )
                     }
                     
                     Spacer()
@@ -165,7 +106,6 @@ struct EditProfileView: View {
                     }
                     
                     NavigationLink(destination: WelcomeView(), isActive: $logout) { EmptyView() }
-                    
                     
                     Button {
                         showAlertDelete.toggle()
@@ -198,6 +138,14 @@ struct EditProfileView: View {
                 .padding(.horizontal, 32)
             }
         }
+        .hideKeyboardOnTap()
+    }
+    
+    private func resetFields() {
+        oldPassword = ""
+        newPassword = ""
+        repeatPassword = ""
+        showError = false
     }
 }
 

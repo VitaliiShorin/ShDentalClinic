@@ -21,7 +21,6 @@ struct RegistrationFormView: View {
     @State private var birthDate = Date()
     @State private var showDatePicker = false
     @State private var registrationCompleted = false
-    @State private var showPassword = false
     
     let genders = ["Мужской", "Женский"]
     
@@ -34,11 +33,11 @@ struct RegistrationFormView: View {
     }
     
     var dateFormatter: DateFormatter {
-        let f = DateFormatter()
-        f.dateStyle = .long
-        return f
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter
     }
-        
+    
     var body: some View {
         ZStack {
             Color.blue.opacity(0.3)
@@ -78,7 +77,9 @@ struct RegistrationFormView: View {
                         HStack {
                             Text(dateFormatter.string(from: birthDate))
                                 .foregroundStyle(.primary)
+                            
                             Spacer()
+                            
                             Image(systemName: "calendar")
                                 .foregroundStyle(.secondary)
                         }
@@ -104,55 +105,22 @@ struct RegistrationFormView: View {
                         }
                     }
                     
-                    Text("Пароль").font(.caption).foregroundStyle(.secondary)
+                    PasswordInputFieldView(
+                        title: "Пароль:",
+                        text: $password,
+                        error: password.count < 6 ? "Пароль должен быть не менее 6 символов" : nil
+                    )
                     
-                    ZStack(alignment: .trailing) {
-                        if showPassword {
-                            CustomTextFieldView(placeholder: "Пароль", text: $password)
-                        } else {
-                            CustomSecureFieldView(placeholder: "Пароль", text: $password)
-                        }
-                        
-                        Button {
-                            showPassword.toggle()
-                        } label: {
-                            Image(systemName: showPassword ? "eye.slash" : "eye")
-                                .foregroundStyle(.gray)
-                        }
-                        .padding(.trailing, 12)
-                    }
+                    PasswordInputFieldView(
+                        title: "Повторите пароль:",
+                        text: $repeatPassword,
+                        error: password != repeatPassword ? "Пароли должны совпадать" : nil
+                    )
                     
-                    Text("Пароль должен содержать не менее 6 символов")
-                        .foregroundStyle(.red)
-                        .font(.caption)
-                        .opacity(password.count < 6 ? 1 : 0)
-                    
-                    Text("Повторить пароль").font(.caption).foregroundStyle(.secondary)
-                    
-                    ZStack(alignment: .trailing) {
-                        if showPassword {
-                            CustomTextFieldView(placeholder: "Пароль", text: $repeatPassword)
-                        } else {
-                            CustomSecureFieldView(placeholder: "Пароль", text: $repeatPassword)
-                        }
-                        
-                        Button {
-                            showPassword.toggle()
-                        } label: {
-                            Image(systemName: showPassword ? "eye.slash" : "eye")
-                                .foregroundStyle(.gray)
-                        }
-                        .padding(.trailing, 12)
-                    }
-                    
-                    Text("Пароли должны совпадать")
-                        .foregroundStyle(.red)
-                        .font(.caption)
-                        .opacity(password != repeatPassword ? 1 : 0)
-                    
-                    NavigationLink(destination: RegistrationSuccessfulView(), isActive: $registrationCompleted) {
-                        EmptyView()
-                    }
+                    NavigationLink(
+                        destination: RegistrationSuccessfulView(),
+                        isActive: $registrationCompleted
+                    ) { EmptyView() }
                     
                     Button {
                         let user = User(
@@ -181,6 +149,7 @@ struct RegistrationFormView: View {
             }
             .padding(.horizontal, 32)
         }
+        .hideKeyboardOnTap()
     }
 }
 

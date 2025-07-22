@@ -17,20 +17,17 @@ struct ReviewsView: View {
             VStack {
                 Text("Выберите врача:")
                     .font(.headline)
-                    .frame(width: UIScreen.main.bounds.width - 32, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom, 8)
                 
-                ForEach(doctors, id: \.fullName) { doctor in
+                ForEach(doctors, id: \.id) { doctor in
                     SectionForDoctorReviewsView(
                         doctor: doctor,
                         numberOfStars: reviewsVM.averageStarsString(forDoctor: doctor.fullName)
                     )
-                    
-                    Spacer()
                 }
             }
             .padding()
-            .frame(width: UIScreen.main.bounds.width)
             .background(.gray .opacity(0.08))
             .clipShape(RoundedRectangle(cornerRadius: 15))
         }
