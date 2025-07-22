@@ -6,11 +6,16 @@
 //
 
 import SwiftUI
-// Готов
+
 struct SetNewPasswordView: View {
+    let phoneNumber: String
+    
     @State private var password = ""
     @State private var repeatPassword = ""
-    @State private var showPassword = false
+    @State private var showError = false
+    @State private var passwordChanged = false
+    
+    @EnvironmentObject var userVM: UserViewModel
     
     private var isButtonActive: Bool {
         password.count >= 6 && password == repeatPassword
@@ -19,63 +24,32 @@ struct SetNewPasswordView: View {
     var body: some View {
         ZStack {
             LinearGradientView()
+            
             VStack {
                 Text("Сбросить пароль")
                     .font(.title3.bold())
                     .padding(.bottom)
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Установите новый пароль:")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                    PasswordInputFieldView(
+                        title: "Установите новый пароль:",
+                        text: $password,
+                        error: password.count < 6 ? "Пароль должен быть не менее 6 символов" : nil
+                    )
                     
-                    ZStack(alignment: .trailing) {
-                        if showPassword {
-                            CustomTextFieldView(placeholder: "", text: $password)
+                    PasswordInputFieldView(
+                        title: "Повторите новый пароль:",
+                        text: $repeatPassword,
+                        error: password != repeatPassword ? "Пароли должны совпадать" : nil
+                    )
+                    
+                    Button {
+                        if userVM.resetPassword(for: phoneNumber, newPassword: password) {
+                            passwordChanged = true
                         } else {
-                            CustomSecureFieldView(placeholder: "", text: $password)
+                            showError = true
                         }
-                        
-                        Button {
-                            showPassword.toggle()
-                        } label: {
-                            Image(systemName: showPassword ? "eye.slash" : "eye")
-                                .foregroundStyle(.gray)
-                        }
-                        .padding(.trailing, 12)
-                    }
-                    
-                    Text("Пароль должен содержать не менее 6 символов")
-                        .foregroundStyle(.red)
-                        .font(.caption)
-                        .opacity(password.count < 6 ? 1 : 0)
-                    
-                    Text("Повторите новый пароль:")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    
-                    ZStack(alignment: .trailing) {
-                        if showPassword {
-                            CustomTextFieldView(placeholder: "", text: $repeatPassword)
-                        } else {
-                            CustomSecureFieldView(placeholder: "", text: $repeatPassword)
-                        }
-                        
-                        Button {
-                            showPassword.toggle()
-                        } label: {
-                            Image(systemName: showPassword ? "eye.slash" : "eye")
-                                .foregroundStyle(.gray)
-                        }
-                        .padding(.trailing, 12)
-                    }
-                    
-                    Text("Пароли должны совпадать")
-                        .foregroundStyle(.red)
-                        .font(.caption)
-                        .opacity(password != repeatPassword ? 1 : 0)
-                    
-                    NavigationLink(destination: PasswordChangedSuccessfullyView()) {
+                    } label: {
                         Text("Завершить")
                             .font(.headline)
                             .frame(maxWidth: .infinity)
@@ -86,16 +60,25 @@ struct SetNewPasswordView: View {
                     }
                     .disabled(!isButtonActive)
                     .padding(.top, 10)
+                    .alert("Ошибка! Не удалось сменить пароль", isPresented: $showError) {
+                        Button("OK", role: .cancel) { }
+                    }
+                    
+                    NavigationLink(
+                        "",
+                        destination: PasswordChangedSuccessfullyView(),
+                        isActive: $passwordChanged
+                    )
                     
                     Spacer()
-                    
                 }
                 .padding(.horizontal, 32)
             }
         }
+        .hideKeyboardOnTap()
     }
 }
 
 #Preview {
-    SetNewPasswordView()
+    SetNewPasswordView(phoneNumber: "")
 }

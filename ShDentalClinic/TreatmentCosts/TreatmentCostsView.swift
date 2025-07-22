@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// Полностью переработан и готов
+
 struct TreatmentCostsView: View {
     
     var body: some View {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LinearGradientView: View {
+    
     var body: some View {
         LinearGradient(
             gradient: Gradient(colors: [.blue.opacity(0.3), .white]),

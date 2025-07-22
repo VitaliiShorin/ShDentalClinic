@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
-// Готов
+
 struct ForgotPasswordView: View {
     @State private var phoneNumber = ""
     @State private var nextScreen = false
+    @State private var showAlert = false
+    
+    @EnvironmentObject var userVM: UserViewModel
     
     private var isButtonActive: Bool {
         phoneNumber.count == 11
@@ -31,12 +34,16 @@ struct ForgotPasswordView: View {
                     
                     CustomTextFieldView(placeholder: "+7", text: Binding(
                         get: { formattedPhoneNumber(phoneNumber) },
-                        set: { newValue in self.phoneNumber = extractDigits(newValue) }
+                        set: { phoneNumber = extractDigits($0) }
                     ))
                     .keyboardType(.phonePad)
                     
                     Button {
-                        nextScreen.toggle()
+                        if userVM.users.contains(where: { $0.phone == phoneNumber }) {
+                            nextScreen.toggle()
+                        } else {
+                            showAlert.toggle()
+                        }
                     } label: {
                         Text("Далее")
                             .font(.headline)
@@ -48,9 +55,12 @@ struct ForgotPasswordView: View {
                     }
                     .disabled(!isButtonActive)
                     .padding(.top)
-                                    
+                    .alert("Пользователь с таким номером не найден", isPresented: $showAlert) {
+                        Button("OK", role: .cancel) { }
+                    }
+                    
                     NavigationLink(
-                        destination: SetNewPasswordView(),
+                        destination: SetNewPasswordView(phoneNumber: phoneNumber),
                         isActive: $nextScreen
                     ) { EmptyView() }
 
@@ -69,9 +79,11 @@ struct ForgotPasswordView: View {
             }
             .padding(.horizontal, 32)
         }
+        .hideKeyboardOnTap()
     }
 }
 
 #Preview {
     ForgotPasswordView()
+        .environmentObject(UserViewModel())
 }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// Полностью переработан и готов
+
 struct ProceduresListView: View {
     let area: MainAreas
 

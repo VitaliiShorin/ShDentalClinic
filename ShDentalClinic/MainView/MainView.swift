@@ -62,14 +62,11 @@ struct MainView: View {
                 .padding(.top,8)
                 .padding(.horizontal)
             }
-            
         }
         .padding(.top)
         .padding(.bottom, 1)
-        
     }
 }
-
 
 #Preview {
     MainView()

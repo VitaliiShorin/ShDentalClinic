@@ -6,22 +6,21 @@
 //
 
 import SwiftUI
-// 100 %
-// Стартовый экран раздела "Записаться на прием"
+
 struct AppointmentSchedulingView: View {
-    @State var selection = "1"
+    @State var selection = 0
     @EnvironmentObject var appointmentVM: BookedAppointmentsViewModel
     
     var body: some View {
         VStack {
             Picker("", selection: $selection) {
-                Text("Связаться с клиникой").tag("1")
-                Text("Online запись").tag("2")
+                Text("Связаться с клиникой").tag(0)
+                Text("Online запись").tag(1)
             }
             .pickerStyle(.segmented)
             .padding([.horizontal, .top])
             
-            if selection == "1" {
+            if selection == 0 {
                 CallTheClinicView()
             } else {
                 OnlineBookingView()

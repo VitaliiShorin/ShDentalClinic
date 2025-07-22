@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct Doctor {
+struct Doctor: Identifiable {
+    let id: UUID
+    let name: String
+    let surname: String
+    let patronymic: String
     let fullName: String
     let speciality: String
     let imageName: String
@@ -22,6 +26,10 @@ struct Doctor {
 
 let doctors: [Doctor] = [
     Doctor(
+        id: UUID(),
+        name: "Анатолий",
+        surname: "Морозов",
+        patronymic: "Владимирович",
         fullName: "Морозов\nАнатолий\nВладимирович",
         speciality: "Главный врач\nХирург\nОртопед",
         imageName: "Анатолий",
@@ -50,6 +58,10 @@ let doctors: [Doctor] = [
         workingDays: [2, 3, 4, 5, 6, 7] // Пн, Вт, Ср, Чт, Пт, Сб
     ),
     Doctor(
+        id: UUID(),
+        name: "Виктория",
+        surname: "Аксенова",
+        patronymic: "Вячеславовна",
         fullName: "Аксенова\nВиктория\nВячеславовна",
         speciality: "Детский стоматолог\nТерапевт",
         imageName: "Виктория",
@@ -78,6 +90,10 @@ let doctors: [Doctor] = [
         workingDays: [2, 3, 4, 5, 6] // Пн, Вт, Ср, Чт, Пт
     ),
     Doctor(
+        id: UUID(),
+        name: "Анна",
+        surname: "Дмитриева",
+        patronymic: "Сергеевна",
         fullName: "Дмитриева\nАнна\nСергеевна",
         speciality: "Имплантолог\nПародонтолог\nТерапевт",
         imageName: "Анна",
@@ -108,6 +124,10 @@ let doctors: [Doctor] = [
         workingDays: [1, 2, 4, 5, 7] // Вс, Пн, Ср, Чт, Сб
     ),
     Doctor(
+        id: UUID(),
+        name: "Вячеслав",
+        surname: "Дементьев",
+        patronymic: "Владимирович",
         fullName: "Дементьев\nВячеслав\nВладимирович",
         speciality: "Челюстно-лицевой хирург\nВедущий специалист клиники",
         imageName: "Вячеслав",
@@ -138,6 +158,10 @@ let doctors: [Doctor] = [
         workingDays: [1, 2, 3, 4] // Вс, Пн, Вт, Ср
     ),
     Doctor(
+        id: UUID(),
+        name: "Дмитрий",
+        surname: "Одинцов",
+        patronymic: "Олегович",
         fullName: "Одинцов\nДмитрий\nОлегович",
         speciality: "Детский стоматолог\nОртодонт",
         imageName: "Дмитрий",
@@ -168,6 +192,10 @@ let doctors: [Doctor] = [
         workingDays: [4, 5, 6, 7] // Ср, Чт, Пт, Сб
     ),
     Doctor(
+        id: UUID(),
+        name: "Мария",
+        surname: "Филлатова",
+        patronymic: "Сергеевна",
         fullName: "Филлатова\nМария\nСергеевна",
         speciality: "Cтоматолог\nТерапевт",
         imageName: "Мария",
@@ -196,6 +224,10 @@ let doctors: [Doctor] = [
         workingDays: [1, 2, 6, 7] // Вс, Пн, Пт, Сб
     ),
     Doctor(
+        id: UUID(),
+        name: "Надежда",
+        surname: "Анисимова",
+        patronymic: "Владимировна",
         fullName: "Анисимова\nНадежда\nВладимировна",
         speciality: "Cтоматолог\nТерапевт\nОртодонт",
         imageName: "Надежда",
@@ -231,6 +263,10 @@ let doctors: [Doctor] = [
         workingDays: [3, 4, 5, 6] // Вт, Ср, Чт, Пт
     ),
     Doctor(
+        id: UUID(),
+        name: "Нина",
+        surname: "Вишнякова",
+        patronymic: "Николаевна",
         fullName: "Вишнякова\nНина\nНиколаевна",
         speciality: "Детский стоматолог\nПародонтолог\nТерапевт",
         imageName: "Нина",

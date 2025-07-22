@@ -9,7 +9,6 @@ import SwiftUI
 
 struct RegistrationSuccessfulView: View {
     
-    
     var body: some View {
         VStack(spacing: 50) {
             Image("Registration")

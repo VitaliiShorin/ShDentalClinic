@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// Готов
+
 struct PasswordChangedSuccessfullyView: View {
     
     var body: some View {
@@ -32,7 +32,6 @@ struct PasswordChangedSuccessfullyView: View {
             .padding(.horizontal, 32)
             .padding(.top, 32)
         }
-        
     }
 }
 

@@ -25,7 +25,6 @@ struct AboutTheDoctorEducationView: View {
             createSectionContent(text: doctor.professionalSkills)
         }
         .padding(.top, 7)
-        .frame(width: UIScreen.main.bounds.width)
         .background(.gray .opacity(0.08))
         .clipShape(RoundedRectangle(cornerRadius: 15))
     }
@@ -33,16 +32,16 @@ struct AboutTheDoctorEducationView: View {
     func createSectionTitle(text: String) -> some View {
         Text(text)
             .font(.callout.bold())
-            .frame(width: UIScreen.main.bounds.width - 32, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading)
             .padding(.bottom, 5)
-            .padding(.leading, 3)
     }
 
     func createSectionContent(text: String) -> some View {
         Text(text)
             .font(.callout)
             .padding(.leading, 12)
-            .frame(width: UIScreen.main.bounds.width - 32, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.bottom, 5)
     }
 }

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct WriteAReviewView: View {
     let doctor: Doctor
-    var onSend: (String, Int) -> Void // Передаем отзыв и звезды
+    var onSend: (String, Int) -> Void
 
-    @State private var text = ""
+    @State private var hintText = ""
     @State private var selectedStars = 0
     @State private var review = ""
     
@@ -22,24 +22,27 @@ struct WriteAReviewView: View {
     }
     
     var body: some View {
-        let width = UIScreen.main.bounds.width - 32
-        let height = width
-
         ScrollView(.vertical, showsIndicators: false) {
             HStack(spacing: 20) {
                 Image(doctor.imageName)
                     .resizable()
-                    .frame(width: width / 2.5, height: height / 2.5)
+                    .frame(width: 140, height: 140)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .shadow(radius: 5)
                 VStack(alignment: .leading) {
-                    Text(doctor.fullName)
+                    Text(doctor.surname)
+                        .font(.callout.bold())
+                    Text(doctor.name)
+                        .font(.callout.bold())
+                    Text(doctor.patronymic)
                         .font(.callout.bold())
                     Text(doctor.speciality)
                         .font(.subheadline)
+                        .padding(.top, 5)
                 }
-                .frame(width: width / 2, height: height / 2.5, alignment: .leading)
+                Spacer()
             }
+            .padding(.horizontal)
 
             Text("Пожалуйста, оцените Ваш прием у врача")
                 .font(.subheadline)
@@ -58,7 +61,7 @@ struct WriteAReviewView: View {
             }
             .padding()
             
-            Text(text)
+            Text(hintText)
                 .font(.subheadline)
                 .padding()
 
@@ -67,7 +70,7 @@ struct WriteAReviewView: View {
                     .padding(8)
                     .background(.gray.opacity(0.1))
                     .cornerRadius(15)
-                    .frame(width: width, height: UIScreen.main.bounds.width / 2)
+                    .frame(maxWidth: .infinity, minHeight: 200)
                     .onChange(of: review) { newValue in
                         if newValue.count > maxCharacterLimit {
                             review = String(newValue.prefix(maxCharacterLimit))
@@ -90,7 +93,7 @@ struct WriteAReviewView: View {
                 onSend(review, selectedStars)
                 review = ""
                 selectedStars = 0
-                text = ""
+                hintText = ""
             } label: {
                 Text("Отправить")
                     .foregroundStyle(.white)
@@ -105,16 +108,17 @@ struct WriteAReviewView: View {
             Spacer()
         }
         .padding()
+        .hideKeyboardOnTap()
     }
     
     func responseToTheStarRating() {
         switch selectedStars {
         case 0...3:
-            self.text = "Что Вас расстроило?"
+            self.hintText = "Что Вас расстроило?"
         case 4:
-            self.text = "Спасибо, что мы могли бы улучшить?"
+            self.hintText = "Спасибо, что мы могли бы улучшить?"
         default:
-            self.text = "Спасибо, мы очень рады!"
+            self.hintText = "Спасибо, мы очень рады!"
         }
     }
 }

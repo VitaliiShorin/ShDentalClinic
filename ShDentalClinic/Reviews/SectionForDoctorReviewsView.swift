@@ -16,58 +16,40 @@ struct SectionForDoctorReviewsView: View {
     
     var body: some View {
         NavigationLink(destination: ReadAndWriteAReviewView(doctor: doctor), isActive: $navigateToDetails) {
-            createSectionForDoctorReviews(
-                fullName: doctor.fullName,
-                imageName: doctor.imageName,
-                numberOfStars: numberOfStars
-            )
-        }
-    }
-    
-    private func createSectionForDoctorReviews(
-        fullName: String,
-        imageName: String,
-        numberOfStars: String
-    ) -> some View {
-        let width = UIScreen.main.bounds.width - 32
-        let height: CGFloat = UIScreen.main.bounds.height / 10
-        
-        return HStack {
-            Image(doctor.imageName)
-                .resizable()
-                .scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .frame(width: width / 5, height: width / 5)
-                .padding(.leading)
-                .padding(.trailing)
-            
-            Text(doctor.fullName)
+            HStack {
+                Image(doctor.imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .frame(width: 90, height: 90)
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                
+                VStack(alignment: .leading) {
+                    Text(doctor.surname)
+                    Text(doctor.name)
+                    Text(doctor.patronymic)
+                }
                 .font(.callout.bold())
                 .foregroundStyle(.black)
-                .multilineTextAlignment(.leading)
-                .frame(height: width / 5)
-            
-            Spacer()
-            
-            VStack(alignment: .trailing) {
+                
+                Spacer()
+                
                 HStack(spacing: 5) {
                     Image(systemName: "star.fill")
                         .font(.body)
                         .foregroundStyle(.gold)
-                        .scaledToFit()
                     Text(numberOfStars)
                         .font(.body.bold())
                         .foregroundStyle(.black)
                 }
+                .padding(.trailing)
+                
             }
-            .padding(.trailing)
-            .frame(height: width / 5, alignment: .center)
-            
+            .background(.white)
+            .cornerRadius(15)
+            .shadow(radius: 1)
         }
-        .frame(width: width, height: height)
-        .background(.white)
-        .cornerRadius(15)
-        .shadow(radius: 1)
     }
 }
 

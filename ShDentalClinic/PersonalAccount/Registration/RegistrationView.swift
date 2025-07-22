@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// Готов
+
 struct RegistrationView: View {
     @State private var phoneNumber = ""
     @State private var showError = false
@@ -18,7 +18,7 @@ struct RegistrationView: View {
     private var digits: String { extractDigits(phoneNumber) }
     
     private var isButtonActive: Bool {
-        phoneNumber.count == 11
+        phoneNumber.count == 11 && !area.isEmpty
     }
     
     var body: some View {
@@ -30,26 +30,18 @@ struct RegistrationView: View {
                 
                 CustomTextFieldView(placeholder: "+7", text: Binding(
                     get: { formattedPhoneNumber(phoneNumber) },
-                    set: { newValue in self.phoneNumber = extractDigits(newValue) }
+                    set: { phoneNumber = extractDigits($0) }
                 ))
                 .keyboardType(.phonePad)
                 .padding(.vertical)
                 
                 CustomTextFieldView(placeholder: "Регион", text: $area)
                 
-                ZStack {
-                    if showError {
-                        Text("Такой пользователь уже зарегистрирован")
-                            .foregroundColor(.red)
-                            .font(.caption)
-                            .multilineTextAlignment(.center)
-                    } else {
-                        Text("Такой пользователь уже зарегистрирован")
-                            .font(.caption)
-                            .multilineTextAlignment(.center)
-                            .opacity(0)
-                    }
-                }
+                Text("Такой пользователь уже зарегистрирован")
+                    .foregroundColor(.red)
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                    .opacity(showError ? 1 : 0)
                 
                 Button {
                     if userVM.users.contains(where: { $0.phone == digits }) {
@@ -70,7 +62,7 @@ struct RegistrationView: View {
                 }
                 .disabled(!isButtonActive)
                 .padding(.vertical)
-                                
+                
                 NavigationLink(
                     destination: RegistrationFormView(phoneNumber: digits),
                     isActive: $navigate
@@ -82,9 +74,9 @@ struct RegistrationView: View {
                 
                 Spacer()
             }
-            .padding(.horizontal, 32)
-            .padding(.top, 32)
+            .padding([.horizontal, .top], 32)
         }
+        .hideKeyboardOnTap()
     }
 }
 

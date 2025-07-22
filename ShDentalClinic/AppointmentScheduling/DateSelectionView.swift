@@ -25,12 +25,11 @@ struct DateSelectionView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: "calendar.badge.clock")
-                    .foregroundStyle(.blue)
                 Text(selectedDate.formatted(date: .numeric, time: .omitted))
-                    .foregroundStyle(.blue)
                     .font(.callout.bold())
                 Spacer()
             }
+            .foregroundStyle(.blue)
             .padding([.horizontal, .top])
 
             ScrollView(.horizontal, showsIndicators: false) {
@@ -58,15 +57,19 @@ struct DateSelectionView: View {
             }
         }
     }
-
-    // Формат dd ("21")
+    
+    /// Возвращает строковое представление дня месяца для переданной даты в формате "dd".
+    /// - Parameter date: Дата, для которой требуется получить день месяца.
+    /// - Returns: Строка с номером дня месяца (например, "05").
     private func formattedDay(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd"
         return formatter.string(from: date)
     }
 
-    // Формат "Пн", "Вт", "Ср" (короткий день недели RU)
+    /// Возвращает короткое строковое представление дня недели для переданной даты на русском языке.
+    /// - Parameter date: Дата, для которой требуется получить день недели.
+    /// - Returns: Строка с сокращённым днём недели (например, "Пн", "Вт", "Ср").
     private func formattedWeekDay(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ru_RU")
@@ -75,11 +78,13 @@ struct DateSelectionView: View {
     }
 }
 
-// MARK: - Extensions для дат
+// MARK: - Date Extensions
 extension Date {
+    // Возвращает начало дня для данной даты
     var startOfDay: Date {
         Calendar.current.startOfDay(for: self)
     }
+    // Метод сравнивает две даты и возвращает true, если обе даты — это один и тот же день
     func isSameDay(as other: Date) -> Bool {
         Calendar.current.isDate(self, inSameDayAs: other)
     }

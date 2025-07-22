@@ -18,13 +18,13 @@ struct ContactPatientsView: View {
                         .foregroundStyle(.secondary)
                         .padding()
                 } else {
-                    ForEach(callbackVM.requests.sorted { $0.created > $1.created }) { req in
+                    ForEach(callbackVM.sortedRequests) { request in
                         VStack(alignment: .leading) {
-                            Text("\(req.surname) \(req.name)")
+                            Text("\(request.surname) \(request.name)")
                                 .font(.headline)
-                            Text("Телефон: \(formattedPhoneNumber(req.phoneNumber))")
+                            Text("Телефон: \(formattedPhoneNumber(request.phoneNumber))")
                                 .foregroundStyle(.secondary)
-                            Text("Дата и время: \(Self.formattedDate(req.created))")
+                            Text("Дата и время: \(Self.formattedDate(request.created))")
                                 .foregroundStyle(.secondary)
                         }
                         .padding()
@@ -41,9 +41,9 @@ struct ContactPatientsView: View {
     }
     
     static func formattedDate(_ date: Date) -> String {
-        let df = DateFormatter()
-        df.dateFormat = "dd.MM.yyyy HH:mm"
-        return df.string(from: date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
+        return dateFormatter.string(from: date)
     }
 }
 

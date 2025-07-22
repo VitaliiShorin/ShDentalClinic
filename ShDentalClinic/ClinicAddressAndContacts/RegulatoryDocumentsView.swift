@@ -13,7 +13,7 @@ struct RegulatoryDocument {
 }
 
 struct RegulatoryDocumentsView: View {
-    
+
     let documents: [RegulatoryDocument] = [
         RegulatoryDocument(
             title: "Федеральный закон РФ от 21.11.2011 № 323-ФЗ Об основах охраны здоровья граждан в Российской Федерации",
@@ -28,29 +28,37 @@ struct RegulatoryDocumentsView: View {
             url: "https://www.consultant.ru/document/cons_doc_LAW_305"
         )
     ]
-    
+
     var body: some View {
         ScrollView {
+            Text("Нормативные документы на осуществление предпринимательской деятельности")
+                .font(.headline)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.blue)
+                .padding(.bottom)
+
             VStack(alignment: .leading, spacing: 16) {
-                Text("Нормативные документы на осуществление предпринимательской деятельности")
-                    .font(.headline)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.blue)
-                    .frame(width: UIScreen.main.bounds.width - 32)
-                    .padding(.bottom)
-                
                 ForEach(documents, id: \.url) { document in
-                    Link(destination: URL(string: document.url)!) {
+                    if let url = URL(string: document.url) {
+                        Link(destination: url) {
+                            HStack {
+                                Image(systemName: "text.book.closed")
+                                    .font(.title2)
+                                Text(document.title)
+                                    .multilineTextAlignment(.leading)
+                                    .foregroundStyle(.blue)
+                            }
+                        }
+                    } else {
                         HStack {
                             Image(systemName: "text.book.closed")
                                 .font(.title2)
                             Text(document.title)
                                 .multilineTextAlignment(.leading)
-                                .foregroundStyle(.blue)
+                                .foregroundStyle(.gray)
                         }
                     }
                 }
-                Spacer()
             }
         }
         .padding()
