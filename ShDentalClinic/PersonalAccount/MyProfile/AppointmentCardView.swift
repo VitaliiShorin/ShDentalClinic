@@ -9,54 +9,85 @@ import SwiftUI
 
 struct AppointmentCardView: View {
     let appointment: BookedAppointment
-
+    let onCancel: (() -> Void)?
+    
+    @State private var showAlert = false
+    @State private var isVisible = true
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                Image(appointment.doctorImage)
-                    .resizable()
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .frame(width: 80, height: 80)
-                VStack(alignment: .leading) {
-                    Text("Врач:")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                    Text(appointment.doctorName)
-                        .font(.callout.bold())
-                        .foregroundStyle(.primary)
-                }
-                Spacer()
-            }
-            
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Дата приема:")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                    Text(Self.dateStr(appointment.date))
-                        .font(.callout.bold())
-                        .foregroundStyle(.primary)
+        if isVisible {
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Image(appointment.doctorImage)
+                        .resizable()
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .frame(width: 80, height: 80)
+                    VStack(alignment: .leading) {
+                        Text("Врач:")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                        Text(appointment.doctorName)
+                            .font(.callout.bold())
+                            .foregroundStyle(.primary)
+                    }
+                    Spacer()
                 }
                 
-                Spacer()
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Дата приема:")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                        Text(Self.dateStr(appointment.date))
+                            .font(.callout.bold())
+                            .foregroundStyle(.primary)
+                    }
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .leading) {
+                        Text("Время:")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                        Text(appointment.hour)
+                            .font(.callout.bold())
+                            .foregroundStyle(.primary)
+                    }
+                }
+                .padding(.top, 6)
                 
-                VStack(alignment: .leading) {
-                    Text("Время:")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                    Text(appointment.hour)
-                        .font(.callout.bold())
-                        .foregroundStyle(.primary)
+                Button {
+                    showAlert.toggle()
+                } label: {
+                    Text("Отменить запись")
+                        .foregroundStyle(.red)
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Вы уверены, что хотите отменить запись?"),
+                        primaryButton: .cancel(),
+                        secondaryButton: .destructive(Text("Отменить запись"), action: animateCancel)
+                    )
                 }
             }
-            .padding(.top, 6)
+            .padding()
+            .background(.white)
+            .cornerRadius(15)
+            .shadow(radius: 2)
+            .transition(.scale.combined(with: .opacity))
+            .animation(.easeInOut(duration: 0.4), value: isVisible)
         }
-        .padding()
-        .background(.white)
-        .cornerRadius(15)
-        .shadow(radius: 2)
     }
-
+    
+    func animateCancel() {
+        withAnimation(.easeInOut(duration: 0.4)) {
+            isVisible = false
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            onCancel?()
+        }
+    }
+    
     static func dateStr(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -74,6 +105,7 @@ struct AppointmentCardView: View {
             doctorImage: "Анатолий",
             date: Date(),
             hour: "14:30"
-        )
+        ),
+        onCancel: {}
     )
 }

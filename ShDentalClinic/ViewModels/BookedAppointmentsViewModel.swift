@@ -29,15 +29,15 @@ class BookedAppointmentsViewModel: ObservableObject {
     @Published var bookedAppointments: [BookedAppointment] = [] {
         didSet { save() }
     }
-
+    
     private let key = "booked_appointments"
     
     // Для удаления забронированного времени
-        init() { load() }
-//    init() {
-//        self.bookedAppointments = []
-//        save()
-//    }
+    init() { load() }
+    //    init() {
+    //        self.bookedAppointments = []
+    //        save()
+    //    }
     
     func add(_ appointment: BookedAppointment) {
         bookedAppointments.append(appointment)
@@ -73,4 +73,22 @@ class BookedAppointmentsViewModel: ObservableObject {
             self.bookedAppointments = loaded
         }
     }
+}
+
+/// Возвращает объект Date, объединяя заданную дату с временем, указанным в строке hour (формат "HH:mm").
+/// Если строка времени некорректна — возвращает nil.
+/// - Parameters:
+/// - hour: Время в формате "HH:mm" (например, "09:30").
+/// - date: Дата, к которой нужно подставить указанное время.
+/// - Returns: Объединённая дата и время в виде объекта Date или nil, если строка времени неверная.
+func timeSlotDate(for hour: String, on date: Date) -> Date? {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm"
+    guard let time = formatter.date(from: hour) else { return nil }
+    let calendar = Calendar.current
+    var comps = calendar.dateComponents([.year, .month, .day], from: date)
+    let hourMin = calendar.dateComponents([.hour, .minute], from: time)
+    comps.hour = hourMin.hour
+    comps.minute = hourMin.minute
+    return calendar.date(from: comps)
 }
