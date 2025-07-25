@@ -78,7 +78,7 @@ struct WelcomeView: View {
                             .padding(.top)
                             .transition(.opacity)
                     } else {
-                        Color.clear.frame(height: 16) 
+                        Color.clear.frame(height: 16)
                     }
                     
                     VStack(spacing: 12) {

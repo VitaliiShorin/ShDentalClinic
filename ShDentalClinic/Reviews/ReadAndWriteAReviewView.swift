@@ -10,11 +10,11 @@ import SwiftUI
 struct ReadAndWriteAReviewView: View {
     let doctor: Doctor
     
-    @EnvironmentObject var reviewsVM: ReviewsViewModel
+    @EnvironmentObject var reviewsVM: ReviewViewModel
     @EnvironmentObject var userVM: UserViewModel
     @State var selection = 0
     
-    var doctorReviews: [DoctorReview] {
+    var doctorReviews: [RealmDoctorReview] {
         reviewsVM.reviews(forDoctor: doctor.fullName)
     }
     
@@ -29,7 +29,7 @@ struct ReadAndWriteAReviewView: View {
             
             if selection == 0 {
                 if doctorReviews.isEmpty {
-                    Text("Пока нет отзывов. Оставьте свой!")
+                    Text("Отзывов пока нет. Оставьте свой!")
                         .foregroundStyle(.gray)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 } else {
@@ -75,6 +75,6 @@ struct ReadAndWriteAReviewView: View {
 
 #Preview {
     ReadAndWriteAReviewView(doctor: doctors[0])
-        .environmentObject(ReviewsViewModel())
+        .environmentObject(ReviewViewModel())
         .environmentObject(UserViewModel())
 }

@@ -57,6 +57,6 @@ struct ReviewsAboutTheDoctorView: View {
         numberOfStars: "5",
         reviewText: "Здесь будет текст отзыва пациента"
     )
-        .environmentObject(ReviewsViewModel())
+        .environmentObject(ReviewViewModel())
         .environmentObject(UserViewModel())
 }

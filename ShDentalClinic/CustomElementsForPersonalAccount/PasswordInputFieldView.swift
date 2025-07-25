@@ -7,20 +7,6 @@
 
 import SwiftUI
 
-// Скрытие клавиатуры по тапу вне текстового поля
-extension View {
-    func hideKeyboardOnTap() -> some View {
-        self.onTapGesture {
-            UIApplication.shared.sendAction(
-                #selector(UIResponder.resignFirstResponder),
-                to: nil,
-                from: nil,
-                for: nil
-            )
-        }
-    }
-}
-
 struct PasswordInputFieldView: View {
     let title: String
     @Binding var text: String
@@ -54,6 +40,19 @@ struct PasswordInputFieldView: View {
     }
 }
 
+// Скрытие клавиатуры по тапу вне текстового поля
+extension View {
+    func hideKeyboardOnTap() -> some View {
+        self.onTapGesture {
+            UIApplication.shared.sendAction(
+                #selector(UIResponder.resignFirstResponder),
+                to: nil,
+                from: nil,
+                for: nil
+            )
+        }
+    }
+}
 
 #Preview {
     PasswordInputFieldView(title: "", text: .constant(""), error: "")

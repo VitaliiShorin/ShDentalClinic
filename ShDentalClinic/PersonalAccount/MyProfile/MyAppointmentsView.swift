@@ -27,7 +27,7 @@ struct MyAppointmentsView: View {
                         .padding(.bottom)
                     
                     if myAppointments.isEmpty {
-                        Text("Записей на прием еще нет.")
+                        Text("Записи на прием отсутствуют")
                             .foregroundStyle(.secondary)
                             .padding(.top)
                     } else {

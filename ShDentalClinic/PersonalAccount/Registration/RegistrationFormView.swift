@@ -124,6 +124,7 @@ struct RegistrationFormView: View {
                     
                     Button {
                         let user = User(
+                            id: UUID(),
                             name: name,
                             surname: surname,
                             patronymic: patronymic,

@@ -6,59 +6,74 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct AdminAppointmentCopy: Identifiable, Codable, Hashable {
-    let id: UUID
-    let patientFullName: String
-    let patientPhone: String
-    let doctorName: String
-    let date: Date
-    let hour: String
+// MARK: - Model
+final class RealmAdminAppointmentCopy: Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var id = UUID()
+    @Persisted var patientFullName = ""
+    @Persisted var patientPhone = ""
+    @Persisted var doctorName = ""
+    @Persisted var date = Date()
+    @Persisted var hour = ""
 }
 
-class AdminAppointmentsCopyStorage: ObservableObject {
-    @Published var copiedAppointments: [AdminAppointmentCopy] = [] {
-        didSet { save() }
-    }
-    
-    private let key = "admin_appointments_copy"
-    
-        init() {
-            load()
+// MARK: - ViewModel
+final class AdminAppointmentCopyStorage: ObservableObject {
+    @Published private(set) var copiedAppointments: [RealmAdminAppointmentCopy] = []
+
+    private let realm: Realm
+
+    // MARK: - Initialization
+    init() {
+        do {
+            realm = try Realm()
+        } catch {
+            fatalError("Failed to initialize Realm: \(error.localizedDescription)")
         }
-//    init() {
-//        self.copiedAppointments = []
-//        save()
-//    }
-    
+//        clearAll() // для тестирования
+        load()
+    }
+
+    // MARK: - Public Methods
     func addCopy(patient: User, appointment: BookedAppointment) {
-        let copy = AdminAppointmentCopy(
-            id: appointment.id,
-            patientFullName: "\(patient.surname) \(patient.name) \(patient.patronymic)",
-            patientPhone: patient.phone,
-            doctorName: appointment.doctorName,
-            date: appointment.date,
-            hour: appointment.hour
-        )
-        if !copiedAppointments.contains(where: { $0.id == appointment.id }) {
-            copiedAppointments.append(copy)
+        guard realm.object(ofType: RealmAdminAppointmentCopy.self, forPrimaryKey: appointment.id) == nil else {
+            return
+        }
+        
+        let copy = RealmAdminAppointmentCopy()
+        copy.id = appointment.id
+        copy.patientFullName = "\(patient.surname) \(patient.name) \(patient.patronymic)"
+        copy.patientPhone = patient.phone
+        copy.doctorName = appointment.doctorName
+        copy.date = appointment.date
+        copy.hour = appointment.hour
+        
+        do {
+            try realm.write {
+                realm.add(copy)
+            }
+            load()
+        } catch {
+            print("Failed to add appointment copy: \(error.localizedDescription)")
         }
     }
     
     func clearAll() {
-        copiedAppointments.removeAll()
-    }
-    
-    private func save() {
-        if let data = try? JSONEncoder().encode(copiedAppointments) {
-            UserDefaults.standard.set(data, forKey: key)
+        do {
+            try realm.write {
+                let allAppointments = realm.objects(RealmAdminAppointmentCopy.self)
+                realm.delete(allAppointments)
+            }
+            load()
+        } catch {
+            print("Failed to clear appointments: \(error.localizedDescription)")
         }
     }
     
+    // MARK: - Private Methods
     private func load() {
-        if let data = UserDefaults.standard.data(forKey: key),
-           let loaded = try? JSONDecoder().decode([AdminAppointmentCopy].self, from: data) {
-            self.copiedAppointments = loaded
-        }
+        let objects = realm.objects(RealmAdminAppointmentCopy.self)
+        copiedAppointments = Array(objects)
     }
 }

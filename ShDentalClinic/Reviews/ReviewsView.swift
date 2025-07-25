@@ -10,7 +10,7 @@ import SwiftUI
 struct ReviewsView: View {
     let doctors: [Doctor]
     
-    @EnvironmentObject var reviewsVM: ReviewsViewModel
+    @EnvironmentObject var reviewsVM: ReviewViewModel
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -37,6 +37,6 @@ struct ReviewsView: View {
 
 #Preview {
     ReviewsView(doctors: doctors)
-        .environmentObject(ReviewsViewModel())
+        .environmentObject(ReviewViewModel())
         .environmentObject(UserViewModel())
 }

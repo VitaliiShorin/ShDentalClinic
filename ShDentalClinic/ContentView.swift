@@ -43,9 +43,9 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environmentObject(ReviewsViewModel())
+        .environmentObject(ReviewViewModel())
         .environmentObject(BookedAppointmentsViewModel())
         .environmentObject(UserViewModel())
-        .environmentObject(CallbackRequestsViewModel())
-        .environmentObject(AdminAppointmentsCopyStorage())
+        .environmentObject(CallbackRequestViewModel())
+        .environmentObject(AdminAppointmentCopyStorage())
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct SectionForDoctorView: View {
     let doctor: Doctor
     
-    @EnvironmentObject var reviewsVM: ReviewsViewModel
+    @EnvironmentObject var reviewsVM: ReviewViewModel
     
     var body: some View {
         VStack {
@@ -70,5 +70,5 @@ struct SectionForDoctorView: View {
 
 #Preview {
     SectionForDoctorView(doctor: doctors[0])
-        .environmentObject(ReviewsViewModel())
+        .environmentObject(ReviewViewModel())
 }

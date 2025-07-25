@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContactPatientsView: View {
-    @EnvironmentObject var callbackVM: CallbackRequestsViewModel
+    @EnvironmentObject var callbackVM: CallbackRequestViewModel
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
@@ -49,5 +49,5 @@ struct ContactPatientsView: View {
 
 #Preview {
     ContactPatientsView()
-        .environmentObject(CallbackRequestsViewModel())
+        .environmentObject(CallbackRequestViewModel())
 }

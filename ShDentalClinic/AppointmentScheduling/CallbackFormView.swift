@@ -13,7 +13,7 @@ struct CallbackFormView: View {
     @State private var phoneNumber = ""
     @State var showAlert = false
     
-    @EnvironmentObject var callbackVM: CallbackRequestsViewModel
+    @EnvironmentObject var callbackVM: CallbackRequestViewModel
     
     private var isButtonActive: Bool {
         !name.isEmpty && !surname.isEmpty && phoneNumber.count >= 11
@@ -66,5 +66,5 @@ struct CallbackFormView: View {
 
 #Preview {
     CallbackFormView()
-        .environmentObject(CallbackRequestsViewModel())
+        .environmentObject(CallbackRequestViewModel())
 }
