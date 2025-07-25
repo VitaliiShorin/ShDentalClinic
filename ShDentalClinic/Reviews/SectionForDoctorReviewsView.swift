@@ -11,7 +11,7 @@ struct SectionForDoctorReviewsView: View {
     let doctor: Doctor
     let numberOfStars: String
     
-    @EnvironmentObject var reviewsVM: ReviewsViewModel
+    @EnvironmentObject var reviewsVM: ReviewViewModel
     @State private var navigateToDetails = false
     
     var body: some View {
@@ -55,5 +55,5 @@ struct SectionForDoctorReviewsView: View {
 
 #Preview {
     SectionForDoctorReviewsView(doctor: doctors[0], numberOfStars: "4,6")
-        .environmentObject(ReviewsViewModel())
+        .environmentObject(ReviewViewModel())
 }

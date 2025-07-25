@@ -6,59 +6,69 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct CallbackRequest: Identifiable, Codable, Hashable {
-    let id: UUID
-    let name: String
-    let surname: String
-    let phoneNumber: String
-    let created: Date
+// MARK: - Model
+final class RealmCallbackRequest: Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var id = UUID()
+    @Persisted var name = ""
+    @Persisted var surname = ""
+    @Persisted var phoneNumber = ""
+    @Persisted var created = Date()
 }
 
-class CallbackRequestsViewModel: ObservableObject {
-    @Published var requests: [CallbackRequest] = [] {
-        didSet { save() }
-    }
+// MARK: - ViewModel
+final class CallbackRequestViewModel: ObservableObject {
+    @Published private(set) var requests: [RealmCallbackRequest] = []
 
-    private let key = "callback_requests"
+    private let realm: Realm
 
+    // MARK: - Initialization
     init() {
+        do {
+            realm = try Realm()
+        } catch {
+            fatalError("Failed to initialize Realm: \(error.localizedDescription)")
+        }
+//        clearAll() // для тестирования
         load()
     }
-//        init() {
-//            self.requests = []
-//            save()
-//        }
-    
-    var sortedRequests: [CallbackRequest] {
+
+    // MARK: - Computed Properties
+    var sortedRequests: [RealmCallbackRequest] {
         requests.sorted { $0.created > $1.created }
     }
-    
+
+    // MARK: - Public Methods
     func add(name: String, surname: String, phoneNumber: String) {
-        let request = CallbackRequest(
-            id: UUID(),
-            name: name,
-            surname: surname,
-            phoneNumber: phoneNumber,
-            created: Date()
-        )
-        requests.insert(request, at: 0) // Новое — сверху
-    }
-
-    private func save() {
-        if let data = try? JSONEncoder().encode(requests) {
-            UserDefaults.standard.set(data, forKey: key)
+        let request = RealmCallbackRequest()
+        request.name = name
+        request.surname = surname
+        request.phoneNumber = phoneNumber
+        
+        do {
+            try realm.write {
+                realm.add(request)
+            }
+            load()
+        } catch {
+            print("Failed to add request: \(error.localizedDescription)")
         }
     }
-
-    private func load() {
-        if let data = UserDefaults.standard.data(forKey: key),
-           let saved = try? JSONDecoder().decode([CallbackRequest].self, from: data) {
-            requests = saved
-        }
+    
+    func load() {
+        requests = Array(realm.objects(RealmCallbackRequest.self))
     }
     
     func clearAll() {
-        requests.removeAll()
+        do {
+            try realm.write {
+                let allRequests = realm.objects(RealmCallbackRequest.self)
+                realm.delete(allRequests)
+            }
+            load()
+        } catch {
+            print("Failed to clear requests: \(error.localizedDescription)")
+        }
     }
 }

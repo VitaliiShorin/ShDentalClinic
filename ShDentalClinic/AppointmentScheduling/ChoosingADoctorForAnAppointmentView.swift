@@ -19,7 +19,7 @@ struct ChoosingADoctorForAnAppointmentView: View {
     
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var appointmentVM: BookedAppointmentsViewModel
-    @EnvironmentObject var appointmentCopyStorage: AdminAppointmentsCopyStorage
+    @EnvironmentObject var appointmentCopyStorage: AdminAppointmentCopyStorage
     
     var body: some View {
         VStack {
@@ -60,7 +60,7 @@ struct ChoosingADoctorForAnAppointmentView: View {
                             hour: hour
                         ) else { return false }
                         if Calendar.current.isDate(selectedDate, inSameDayAs: Date()) {
-                            if let slotDate = timeSlotDate(for: hour, on: selectedDate) {
+                            if let slotDate = Date().timeSlotDate(for: hour, on: selectedDate) {
                                 return slotDate > Date()
                             }
                             return false

@@ -125,5 +125,5 @@ struct WriteAReviewView: View {
 
 #Preview {
     WriteAReviewView(doctor: doctors[0]) { review, stars in }
-        .environmentObject(ReviewsViewModel())
+        .environmentObject(ReviewViewModel())
 }

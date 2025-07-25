@@ -26,5 +26,5 @@ struct OurDoctorsView: View {
 
 #Preview {
     OurDoctorsView(doctors: doctors)
-        .environmentObject(ReviewsViewModel())
+        .environmentObject(ReviewViewModel())
 }

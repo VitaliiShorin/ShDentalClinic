@@ -11,7 +11,7 @@ struct AboutTheDoctorView: View {
     let doctor: Doctor
     
     @State var selection = 0
-    @EnvironmentObject var reviewsVM: ReviewsViewModel
+    @EnvironmentObject var reviewsVM: ReviewViewModel
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -52,7 +52,7 @@ struct AboutTheDoctorView: View {
                 } else {
                     let doctorReviews = reviewsVM.reviews(forDoctor: doctor.fullName)
                     if doctorReviews.isEmpty {
-                        Text("Пока нет отзывов. Оставьте свой!")
+                        Text("Отзывов пока нет. Оставьте свой!")
                             .foregroundStyle(.gray)
                     } else {
                         VStack(spacing: 16) {
@@ -83,5 +83,5 @@ struct AboutTheDoctorView: View {
 
 #Preview {
     AboutTheDoctorView(doctor: doctors[3])
-        .environmentObject(ReviewsViewModel())
+        .environmentObject(ReviewViewModel())
 }

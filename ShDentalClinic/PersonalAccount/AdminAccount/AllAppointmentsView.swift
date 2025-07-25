@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct AllAppointmentsView: View {
-    @EnvironmentObject var appointmentCopyStorage: AdminAppointmentsCopyStorage
+    @EnvironmentObject var appointmentCopyStorage: AdminAppointmentCopyStorage
     
-    private var sortedAppointments: [AdminAppointmentCopy] {
+    private var sortedAppointments: [RealmAdminAppointmentCopy] {
         appointmentCopyStorage.copiedAppointments.sorted { $0.date > $1.date }
     }
     
@@ -18,7 +18,7 @@ struct AllAppointmentsView: View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack(spacing: 12) {
                 if appointmentCopyStorage.copiedAppointments.isEmpty {
-                    Text("Записей на прием нет.")
+                    Text("Записи на прием отсутствуют.")
                         .foregroundStyle(.secondary)
                         .padding()
                 } else {
@@ -54,5 +54,5 @@ struct AllAppointmentsView: View {
 
 #Preview {
     AllAppointmentsView()
-        .environmentObject(AdminAppointmentsCopyStorage())
+        .environmentObject(AdminAppointmentCopyStorage())
 }

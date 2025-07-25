@@ -6,80 +6,110 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct DoctorReview: Identifiable, Codable {
-    let id: UUID
-    let doctorFullName: String
-    let patientName: String
-    let date: Date
-    let numberOfStars: Int
-    let reviewText: String
+// MARK: - Model
+final class RealmDoctorReview: Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var id = UUID()
+    @Persisted var doctorFullName = ""
+    @Persisted var patientName = ""
+    @Persisted var date = Date()
+    @Persisted var numberOfStars = 0
+    @Persisted var reviewText = ""
 }
 
-class ReviewsViewModel: ObservableObject {
-    @Published var reviews: [DoctorReview] = [] {
-        didSet { save() }
+// MARK: - ViewModel
+final class ReviewViewModel: ObservableObject {
+    @Published private(set) var reviews: [RealmDoctorReview] = []
+    
+    private let realm: Realm
+    
+    // MARK: - Formatter
+    private static let starFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 1
+        formatter.decimalSeparator = ","
+        return formatter
+    }()
+    
+    // MARK: - Initialization
+    init() {
+        do {
+            realm = try Realm()
+        } catch {
+            fatalError("Failed to initialize Realm: \(error.localizedDescription)")
+        }
+//        deleteAllReviews() // для тестирования
+        load()
     }
     
-    // Для удаления отзывов:
-    init() { load() }
-//    init() {
-//        self.reviews = []
-//        save()
-//    }
-    
-    func reviews(forDoctor name: String) -> [DoctorReview] {
-        reviews.filter { $0.doctorFullName == name }
+    // MARK: - Public Methods
+    func reviews(forDoctor doctorFullName: String) -> [RealmDoctorReview] {
+        reviews
+            .filter { $0.doctorFullName == doctorFullName }
             .sorted { $0.date > $1.date }
     }
     
-    func addReview(for doctor: Doctor, patientName: String, stars: Int, text: String) {
-        let review = DoctorReview(
-            id: UUID(),
-            doctorFullName: doctor.fullName,
-            patientName: patientName,
-            date: Date(),
-            numberOfStars: stars,
-            reviewText: text
-        )
-        reviews.append(review)
-    }
-    
-    private let reviewsKey = "doctor_reviews"
-
-    func save() {
-        if let data = try? JSONEncoder().encode(reviews) {
-            UserDefaults.standard.set(data, forKey: reviewsKey)
+    func addReview(
+        for doctor: Doctor,
+        patientName: String,
+        stars: Int,
+        text: String
+    ) {
+        let review = RealmDoctorReview()
+        review.id = UUID()
+        review.doctorFullName = doctor.fullName
+        review.patientName = patientName
+        review.date = Date()
+        review.numberOfStars = stars
+        review.reviewText = text
+        
+        do {
+            try realm.write {
+                realm.add(review)
+            }
+            load()
+        } catch {
+            print("Failed to add review: \(error.localizedDescription)")
         }
     }
-    
+
     func load() {
-        if let data = UserDefaults.standard.data(forKey: reviewsKey),
-           let loaded = try? JSONDecoder().decode([DoctorReview].self, from: data) {
-            reviews = loaded
-        }
+        let realmReviews = realm.objects(RealmDoctorReview.self)
+        reviews = Array(realmReviews)
     }
     
-    func averageStars(forDoctor name: String) -> Double {
-        let doctorReviews = reviews(forDoctor: name)
+    func averageStars(forDoctor doctorFullName: String) -> Double {
+        let doctorReviews = reviews(forDoctor: doctorFullName)
         guard !doctorReviews.isEmpty else { return 0.0 }
-        let total = doctorReviews.reduce(0) { $0 + $1.numberOfStars }
-        return Double(total) / Double(doctorReviews.count)
+        
+        let totalStars = doctorReviews.reduce(0) { $0 + $1.numberOfStars }
+        return Double(totalStars) / Double(doctorReviews.count)
     }
-
-    func averageStarsString(forDoctor name: String) -> String {
-        let average = averageStars(forDoctor: name)
-
-        if average == 0 {
-            return "0"
-        } else if average.truncatingRemainder(dividingBy: 1) == 0 {
+    
+    func averageStarsString(forDoctor doctorFullName: String) -> String {
+        let average = averageStars(forDoctor: doctorFullName)
+        
+        guard average > 0 else { return "0" }
+        
+        if average.truncatingRemainder(dividingBy: 1) == 0 {
             return String(Int(average))
-        } else {
-            let formatter = NumberFormatter()
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
-            formatter.decimalSeparator = ","
-            return formatter.string(from: NSNumber(value: average)) ?? String(format: "%.1f", average).replacingOccurrences(of: ".", with: ",")
+        }
+        
+        return Self.starFormatter.string(from: NSNumber(value: average)) ??
+        String(format: "%.1f", average).replacingOccurrences(of: ".", with: ",")
+    }
+    
+    func deleteAllReviews() {
+        do {
+            let allReviews = realm.objects(RealmDoctorReview.self)
+            try realm.write {
+                realm.delete(allReviews)
+            }
+            load()
+        } catch {
+            print("Failed to delete all reviews: \(error.localizedDescription)")
         }
     }
 }

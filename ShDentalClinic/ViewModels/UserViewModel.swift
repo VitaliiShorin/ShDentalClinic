@@ -6,80 +6,155 @@
 //
 
 import Foundation
+import RealmSwift
 
-class UserViewModel: ObservableObject {
-    @Published var users: [User] = [] {
-        didSet { saveUsers() }
-    }
-    @Published var currentUserID: UUID? {
-        didSet { saveCurrentUserID() }
-    }
-    
+// MARK: - Model
+final class RealmUser: Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var id = UUID()
+    @Persisted var name = ""
+    @Persisted var surname = ""
+    @Persisted var patronymic = ""
+    @Persisted var gender = ""
+    @Persisted var birthDate = Date()
+    @Persisted var phone = ""
+    @Persisted var password = ""
+}
+
+struct User {
+    let id: UUID
+    let name: String
+    let surname: String
+    let patronymic: String
+    let gender: String
+    let birthDate: Date
+    let phone: String
+    let password: String
+}
+
+// MARK: - ViewModel
+final class UserViewModel: ObservableObject {
+    @Published private(set) var users: [User] = []
+    @Published private(set) var currentUserID: UUID?
+
+    private let realm: Realm
+    private let currentUserKey = "current_user_id"
+
     var user: User? {
         guard let id = currentUserID else { return nil }
         return users.first(where: { $0.id == id })
     }
 
-    private let usersKey = "users_list"
-    private let currentUserKey = "current_user_id"
-    
+    // MARK: - Initialization
     init() {
+        do {
+            realm = try Realm()
+        } catch {
+            fatalError("Failed to initialize Realm: \(error)")
+        }
         loadUsers()
         loadCurrentUserID()
-        // Раскомментировать для удаления всех users
-//        removeAllUsers()
+//        removeAllUsers() // для тестирования
     }
-    
+
+    // MARK: - Public Methods
     func register(_ user: User) -> Bool {
-        let exists = users.contains { $0.phone == user.phone }
-        guard !exists else { return false }
-        users.append(user)
+        guard realm.object(ofType: RealmUser.self, forPrimaryKey: user.id) == nil,
+              !realm.objects(RealmUser.self).contains(where: { $0.phone == user.phone })
+        else { return false }
+        
+        let realmUser = realmUser(from: user)
+        do {
+            try realm.write { realm.add(realmUser) }
+        } catch {
+            print("Realm write error: \(error.localizedDescription)")
+            return false
+        }
+        loadUsers()
         currentUserID = user.id
+        saveCurrentUserID()
         return true
     }
-    
+
     func checkCredentials(phone: String, password: String) -> Bool {
-        guard let foundUser = users.first(where: { $0.phone == phone && $0.password == password }) else { return false }
-        currentUserID = foundUser.id
-        return true
+        if let realmUser = realm.objects(RealmUser.self).first(where: { $0.phone == phone && $0.password == password }) {
+            currentUserID = realmUser.id
+            saveCurrentUserID()
+            return true
+        }
+        return false
     }
 
     func changePassword(oldPassword: String, newPassword: String) -> Bool {
         guard let id = currentUserID,
-              let index = users.firstIndex(where: { $0.id == id }),
-              users[index].password == oldPassword else { return false }
-        objectWillChange.send()
-        users[index].password = newPassword
-        saveUsers()
+              let realmUser = realm.object(ofType: RealmUser.self, forPrimaryKey: id),
+              realmUser.password == oldPassword else { return false }
+        
+        do {
+            try realm.write { realmUser.password = newPassword }
+        } catch {
+            print("Realm write error: \(error.localizedDescription)")
+            return false
+        }
+        loadUsers()
         return true
     }
 
     func resetPassword(for phone: String, newPassword: String) -> Bool {
-        guard let index = users.firstIndex(where: { $0.phone == phone }) else { return false }
-        users[index].password = newPassword
-        return true
-    }
-    
-    func logout() {
-        currentUserID = nil
-    }
-    
-    func deleteCurrentUser() {
-        guard let id = currentUserID else { return }
-        users.removeAll { $0.id == id }
-        currentUserID = nil
+        if let realmUser = realm.objects(RealmUser.self).first(where: { $0.phone == phone }) {
+            do {
+                try realm.write { realmUser.password = newPassword }
+            } catch {
+                print("Realm write error: \(error.localizedDescription)")
+                return false
+            }
+            loadUsers()
+            return true
+        }
+        return false
     }
 
-    private func saveUsers() {
-        if let data = try? JSONEncoder().encode(users) {
-            UserDefaults.standard.set(data, forKey: usersKey)
+    func logout() {
+        currentUserID = nil
+        saveCurrentUserID()
+    }
+
+    func deleteCurrentUser() {
+        guard let id = currentUserID,
+              let realmUser = realm.object(ofType: RealmUser.self, forPrimaryKey: id) else { return }
+        do {
+            try realm.write { realm.delete(realmUser) }
+        } catch {
+            print("Realm write error: \(error.localizedDescription)")
+            return
         }
+        currentUserID = nil
+        saveCurrentUserID()
+        loadUsers()
     }
     
+    func removeAllUsers() {
+        do {
+            try realm.write { realm.delete(realm.objects(RealmUser.self)) }
+        } catch {
+            print("Realm write error: \(error.localizedDescription)")
+        }
+        users = []
+        currentUserID = nil
+        saveCurrentUserID()
+    }
+
+    // MARK: - Private Methods
     private func loadUsers() {
-        if let data = UserDefaults.standard.data(forKey: usersKey),
-           let saved = try? JSONDecoder().decode([User].self, from: data) {
-            users = saved
+        let realmUsers = realm.objects(RealmUser.self)
+        self.users = realmUsers.map {
+            User(id: $0.id,
+                 name: $0.name,
+                 surname: $0.surname,
+                 patronymic: $0.patronymic,
+                 gender: $0.gender,
+                 birthDate: $0.birthDate,
+                 phone: $0.phone,
+                 password: $0.password)
         }
     }
     
@@ -92,15 +167,22 @@ class UserViewModel: ObservableObject {
     }
     
     private func loadCurrentUserID() {
-        if let str = UserDefaults.standard.string(forKey: currentUserKey),
-           let uuid = UUID(uuidString: str) {
+        if let userIDString = UserDefaults.standard.string(forKey: currentUserKey),
+           let uuid = UUID(uuidString: userIDString) {
             currentUserID = uuid
         }
     }
     
-    // Для удаления всех users
-    func removeAllUsers() {
-        users = []
-        currentUserID = nil // Чтобы сбросить текущего
+    private func realmUser(from user: User) -> RealmUser {
+        let realmUser = RealmUser()
+        realmUser.id = user.id
+        realmUser.name = user.name
+        realmUser.surname = user.surname
+        realmUser.patronymic = user.patronymic
+        realmUser.gender = user.gender
+        realmUser.birthDate = user.birthDate
+        realmUser.phone = user.phone
+        realmUser.password = user.password
+        return realmUser
     }
 }

@@ -11,8 +11,8 @@ struct AdminAccountView: View {
     @State var selection = 0
     @State private var showAlert = false
     @State private var navigateToWelcome = false
-    @EnvironmentObject var callbackVM: CallbackRequestsViewModel
-    @EnvironmentObject var appointmentCopyStorage: AdminAppointmentsCopyStorage
+    @EnvironmentObject var callbackVM: CallbackRequestViewModel
+    @EnvironmentObject var appointmentCopyStorage: AdminAppointmentCopyStorage
     
     
     var body: some View {
@@ -87,6 +87,6 @@ struct AdminAccountView: View {
 
 #Preview {
     AdminAccountView()
-        .environmentObject(CallbackRequestsViewModel())
-        .environmentObject(AdminAppointmentsCopyStorage())
+        .environmentObject(CallbackRequestViewModel())
+        .environmentObject(AdminAppointmentCopyStorage())
 }

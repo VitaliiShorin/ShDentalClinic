@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct ShDentalClinicApp: App {
-    @StateObject var reviewsVM = ReviewsViewModel()
+    @StateObject var reviewsVM = ReviewViewModel()
     @StateObject var appointmentVM = BookedAppointmentsViewModel()
     @StateObject var userVM = UserViewModel()
-    @StateObject var callbackVM = CallbackRequestsViewModel()
-    @StateObject var appointmentCopyStorage = AdminAppointmentsCopyStorage()
-
+    @StateObject var callbackVM = CallbackRequestViewModel()
+    @StateObject var appointmentCopyStorage = AdminAppointmentCopyStorage()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

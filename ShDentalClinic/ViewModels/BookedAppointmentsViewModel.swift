@@ -6,45 +6,60 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct BookedAppointment: Codable, Identifiable, Hashable {
-    let id: UUID
-    let userID: UUID
-    let doctorName: String
-    let doctorImage: String
-    let date: Date
-    let hour: String
-
-    init(id: UUID = UUID(), userID: UUID, doctorName: String, doctorImage: String, date: Date, hour: String) {
-        self.id = id
-        self.userID = userID
-        self.doctorName = doctorName
-        self.doctorImage = doctorImage
-        self.date = date
-        self.hour = hour
-    }
+// MARK: - Model
+final class BookedAppointment: Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var id = UUID()
+    @Persisted var userID = UUID()
+    @Persisted var doctorName = ""
+    @Persisted var doctorImage = ""
+    @Persisted var date = Date()
+    @Persisted var hour = ""
 }
 
-class BookedAppointmentsViewModel: ObservableObject {
-    @Published var bookedAppointments: [BookedAppointment] = [] {
-        didSet { save() }
+// MARK: - ViewModel
+final class BookedAppointmentsViewModel: ObservableObject {
+    @Published private(set) var bookedAppointments: [BookedAppointment] = []
+    
+    private let realm: Realm
+    
+    // MARK: - Initialization
+    init() {
+        do {
+            realm = try Realm()
+            bookedAppointments = Array(realm.objects(BookedAppointment.self))
+//        removeAllAppointments() // для тестирования
+        } catch {
+            fatalError("Failed to initialize Realm: \(error.localizedDescription)")
+        }
     }
     
-    private let key = "booked_appointments"
-    
-    // Для удаления забронированного времени
-    init() { load() }
-    //    init() {
-    //        self.bookedAppointments = []
-    //        save()
-    //    }
-    
+    // MARK: - Public Methods
     func add(_ appointment: BookedAppointment) {
-        bookedAppointments.append(appointment)
+        do {
+            try realm.write {
+                realm.add(appointment)
+            }
+            load()
+        } catch {
+            print("Failed to add appointment: \(error.localizedDescription)")
+        }
     }
     
     func remove(_ appointment: BookedAppointment) {
-        bookedAppointments.removeAll { $0 == appointment }
+        guard let existingAppointment = realm.object(ofType: BookedAppointment.self, forPrimaryKey: appointment.id) else {
+            return
+        }
+        
+        do {
+            try realm.write {
+                realm.delete(existingAppointment)
+            }
+            load()
+        } catch {
+            print("Failed to remove appointment: \(error.localizedDescription)")
+        }
     }
     
     func isHourBooked(doctor: Doctor, date: Date, hour: String) -> Bool {
@@ -61,34 +76,20 @@ class BookedAppointmentsViewModel: ObservableObject {
             .sorted { $0.date < $1.date }
     }
     
-    private func save() {
-        if let data = try? JSONEncoder().encode(bookedAppointments) {
-            UserDefaults.standard.set(data, forKey: key)
+    func removeAllAppointments() {
+        do {
+            try realm.write {
+                let allAppointments = realm.objects(BookedAppointment.self)
+                realm.delete(allAppointments)
+            }
+            load()
+        } catch {
+            print("Failed to remove all appointments: \(error.localizedDescription)")
         }
     }
     
+    // MARK: - Private Methods
     private func load() {
-        if let data = UserDefaults.standard.data(forKey: key),
-           let loaded = try? JSONDecoder().decode([BookedAppointment].self, from: data) {
-            self.bookedAppointments = loaded
+            bookedAppointments = Array(realm.objects(BookedAppointment.self))
         }
-    }
-}
-
-/// Возвращает объект Date, объединяя заданную дату с временем, указанным в строке hour (формат "HH:mm").
-/// Если строка времени некорректна — возвращает nil.
-/// - Parameters:
-/// - hour: Время в формате "HH:mm" (например, "09:30").
-/// - date: Дата, к которой нужно подставить указанное время.
-/// - Returns: Объединённая дата и время в виде объекта Date или nil, если строка времени неверная.
-func timeSlotDate(for hour: String, on date: Date) -> Date? {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "HH:mm"
-    guard let time = formatter.date(from: hour) else { return nil }
-    let calendar = Calendar.current
-    var comps = calendar.dateComponents([.year, .month, .day], from: date)
-    let hourMin = calendar.dateComponents([.hour, .minute], from: time)
-    comps.hour = hourMin.hour
-    comps.minute = hourMin.minute
-    return calendar.date(from: comps)
 }
