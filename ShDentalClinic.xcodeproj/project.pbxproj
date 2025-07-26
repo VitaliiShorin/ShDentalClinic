@@ -8,7 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		3C562B862E33F79100CDABD8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3C562B852E33F79100CDABD8 /* RealmSwift */; };
+		3C7824702E340C4600513154 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3C562B852E33F79100CDABD8 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3C7824712E340C4600513154 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3C7824702E340C4600513154 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3C75E8A72DCA439300FBF896 /* ShDentalClinic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShDentalClinic.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +75,7 @@
 				3C75E8A32DCA439300FBF896 /* Sources */,
 				3C75E8A42DCA439300FBF896 /* Frameworks */,
 				3C75E8A52DCA439300FBF896 /* Resources */,
+				3C7824712E340C4600513154 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

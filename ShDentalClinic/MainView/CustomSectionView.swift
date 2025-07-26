@@ -55,10 +55,10 @@ struct CustomSectionView: View {
                         Image(imageName)
                             .resizable()
                             .scaledToFit()
-                            .frame(maxWidth: 140, maxHeight: 140)
+                            .frame(maxWidth: 130, maxHeight: 130)
                             .padding(.trailing, 24)
                     }
-                    .frame(maxHeight: 150)
+                    .frame(maxHeight: 140)
                     
                 } else if (direction == .vertical && size == .small) {
                     VStack {
@@ -70,10 +70,10 @@ struct CustomSectionView: View {
                         Image(imageName)
                             .resizable()
                             .scaledToFit()
-                            .padding(.bottom)
-                            .frame(maxWidth: 150, maxHeight: 150)
+                            .frame(maxWidth: 130, maxHeight: 130)
+                            .padding(.bottom, 8)
                     }
-                    .frame(maxWidth: 120, maxHeight: 150)
+                    .frame(maxWidth: 120, maxHeight: 140)
                     
                 } else {
                     VStack {
@@ -84,9 +84,10 @@ struct CustomSectionView: View {
                             .resizable()
                             .scaledToFit()
                     }
-                    .frame(maxHeight: 150)
+                    .frame(maxHeight: 140)
                 }
             }
+            .frame(height: 140)
             .background(.main)
             .cornerRadius(15)
             .shadow(radius: 3)
