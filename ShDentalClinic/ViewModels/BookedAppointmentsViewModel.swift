@@ -8,19 +8,9 @@
 import Foundation
 import RealmSwift
 
-// MARK: - Model
-final class BookedAppointment: Object, ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var id = UUID()
-    @Persisted var userID = UUID()
-    @Persisted var doctorName = ""
-    @Persisted var doctorImage = ""
-    @Persisted var date = Date()
-    @Persisted var hour = ""
-}
-
 // MARK: - ViewModel
 final class BookedAppointmentsViewModel: ObservableObject {
-    @Published private(set) var bookedAppointments: [BookedAppointment] = []
+    @Published private(set) var bookedAppointments: [RealmBookedAppointment] = []
     
     private let realm: Realm
     
@@ -28,7 +18,7 @@ final class BookedAppointmentsViewModel: ObservableObject {
     init() {
         do {
             realm = try Realm()
-            bookedAppointments = Array(realm.objects(BookedAppointment.self))
+            bookedAppointments = Array(realm.objects(RealmBookedAppointment.self))
 //        removeAllAppointments() // для тестирования
         } catch {
             fatalError("Failed to initialize Realm: \(error.localizedDescription)")
@@ -36,7 +26,7 @@ final class BookedAppointmentsViewModel: ObservableObject {
     }
     
     // MARK: - Public Methods
-    func add(_ appointment: BookedAppointment) {
+    func add(_ appointment: RealmBookedAppointment) {
         do {
             try realm.write {
                 realm.add(appointment)
@@ -47,8 +37,8 @@ final class BookedAppointmentsViewModel: ObservableObject {
         }
     }
     
-    func remove(_ appointment: BookedAppointment) {
-        guard let existingAppointment = realm.object(ofType: BookedAppointment.self, forPrimaryKey: appointment.id) else {
+    func remove(_ appointment: RealmBookedAppointment) {
+        guard let existingAppointment = realm.object(ofType: RealmBookedAppointment.self, forPrimaryKey: appointment.id) else {
             return
         }
         
@@ -70,7 +60,7 @@ final class BookedAppointmentsViewModel: ObservableObject {
         }
     }
     
-    func appointments(for userID: UUID) -> [BookedAppointment] {
+    func appointments(for userID: UUID) -> [RealmBookedAppointment] {
         bookedAppointments
             .filter { $0.userID == userID }
             .sorted { $0.date < $1.date }
@@ -79,7 +69,7 @@ final class BookedAppointmentsViewModel: ObservableObject {
     func removeAllAppointments() {
         do {
             try realm.write {
-                let allAppointments = realm.objects(BookedAppointment.self)
+                let allAppointments = realm.objects(RealmBookedAppointment.self)
                 realm.delete(allAppointments)
             }
             load()
@@ -90,6 +80,6 @@ final class BookedAppointmentsViewModel: ObservableObject {
     
     // MARK: - Private Methods
     private func load() {
-            bookedAppointments = Array(realm.objects(BookedAppointment.self))
+            bookedAppointments = Array(realm.objects(RealmBookedAppointment.self))
         }
 }
