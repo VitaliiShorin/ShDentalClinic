@@ -8,15 +8,6 @@
 import Foundation
 import RealmSwift
 
-// MARK: - Model
-final class RealmCallbackRequest: Object, ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var id = UUID()
-    @Persisted var name = ""
-    @Persisted var surname = ""
-    @Persisted var phoneNumber = ""
-    @Persisted var created = Date()
-}
-
 // MARK: - ViewModel
 final class CallbackRequestViewModel: ObservableObject {
     @Published private(set) var requests: [RealmCallbackRequest] = []

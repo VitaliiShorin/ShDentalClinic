@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3C562B862E33F79100CDABD8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3C562B852E33F79100CDABD8 /* RealmSwift */; };
 		3C7824702E340C4600513154 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3C562B852E33F79100CDABD8 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3CB71F062E5EE25F00D6503B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3CB71F052E5EE25F00D6503B /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C562B862E33F79100CDABD8 /* RealmSwift in Frameworks */,
+				3CB71F062E5EE25F00D6503B /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +89,7 @@
 			name = ShDentalClinic;
 			packageProductDependencies = (
 				3C562B852E33F79100CDABD8 /* RealmSwift */,
+				3CB71F052E5EE25F00D6503B /* Lottie */,
 			);
 			productName = ShDentalClinic;
 			productReference = 3C75E8A72DCA439300FBF896 /* ShDentalClinic.app */;
@@ -118,6 +121,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				3C562B822E33F79100CDABD8 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				3CB71F042E5EE25F00D6503B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3C75E8A82DCA439300FBF896 /* Products */;
@@ -369,6 +373,14 @@
 				kind = branch;
 			};
 		};
+		3CB71F042E5EE25F00D6503B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -376,6 +388,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3C562B822E33F79100CDABD8 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		3CB71F052E5EE25F00D6503B /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3CB71F042E5EE25F00D6503B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
