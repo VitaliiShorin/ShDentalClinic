@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C4232572E4F78D100F1D057 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3C4232562E4F78D100F1D057 /* Lottie */; };
 		3C562B862E33F79100CDABD8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3C562B852E33F79100CDABD8 /* RealmSwift */; };
 		3C7824702E340C4600513154 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3C562B852E33F79100CDABD8 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3CB71F062E5EE25F00D6503B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3CB71F052E5EE25F00D6503B /* Lottie */; };
@@ -44,7 +45,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C562B862E33F79100CDABD8 /* RealmSwift in Frameworks */,
+
 				3CB71F062E5EE25F00D6503B /* Lottie in Frameworks */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +92,9 @@
 			name = ShDentalClinic;
 			packageProductDependencies = (
 				3C562B852E33F79100CDABD8 /* RealmSwift */,
+
 				3CB71F052E5EE25F00D6503B /* Lottie */,
+
 			);
 			productName = ShDentalClinic;
 			productReference = 3C75E8A72DCA439300FBF896 /* ShDentalClinic.app */;
@@ -121,7 +126,9 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				3C562B822E33F79100CDABD8 /* XCRemoteSwiftPackageReference "realm-swift" */,
+
 				3CB71F042E5EE25F00D6503B /* XCRemoteSwiftPackageReference "lottie-ios" */,
+
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3C75E8A82DCA439300FBF896 /* Products */;
@@ -365,6 +372,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3C4232552E4F78D100F1D057 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.2;
+			};
+		};
 		3C562B822E33F79100CDABD8 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
@@ -384,6 +399,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3C4232562E4F78D100F1D057 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3C4232552E4F78D100F1D057 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
 		3C562B852E33F79100CDABD8 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3C562B822E33F79100CDABD8 /* XCRemoteSwiftPackageReference "realm-swift" */;
