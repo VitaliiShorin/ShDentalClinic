@@ -8,29 +8,6 @@
 import Foundation
 import RealmSwift
 
-// MARK: - Model
-final class RealmUser: Object, ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var id = UUID()
-    @Persisted var name = ""
-    @Persisted var surname = ""
-    @Persisted var patronymic = ""
-    @Persisted var gender = ""
-    @Persisted var birthDate = Date()
-    @Persisted var phone = ""
-    @Persisted var password = ""
-}
-
-struct User {
-    let id: UUID
-    let name: String
-    let surname: String
-    let patronymic: String
-    let gender: String
-    let birthDate: Date
-    let phone: String
-    let password: String
-}
-
 // MARK: - ViewModel
 final class UserViewModel: ObservableObject {
     @Published private(set) var users: [User] = []
