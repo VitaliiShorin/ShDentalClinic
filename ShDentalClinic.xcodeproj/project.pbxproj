@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		3CB71DCA2E5EE10B00D6503B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 3CB71DC92E5EE10B00D6503B /* Realm */; };
-		3CB71DCC2E5EE10B00D6503B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3CB71DCB2E5EE10B00D6503B /* RealmSwift */; };
-/* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		3C7824712E340C4600513154 /* Embed Frameworks */ = {
@@ -41,8 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CB71DCC2E5EE10B00D6503B /* RealmSwift in Frameworks */,
-				3CB71DCA2E5EE10B00D6503B /* Realm in Frameworks */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,8 +81,7 @@
 			);
 			name = ShDentalClinic;
 			packageProductDependencies = (
-				3CB71DC92E5EE10B00D6503B /* Realm */,
-				3CB71DCB2E5EE10B00D6503B /* RealmSwift */,
+
 			);
 			productName = ShDentalClinic;
 			productReference = 3C75E8A72DCA439300FBF896 /* ShDentalClinic.app */;
@@ -118,8 +112,10 @@
 			mainGroup = 3C75E89E2DCA439300FBF896;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				3CB71CFF2E5EDEC900D6503B /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				3CB71DC82E5EE10B00D6503B /* XCRemoteSwiftPackageReference "realm-swift" */,
+
+				3CB726262E5FD98A00D6503B /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				3CB726272E5FD9A100D6503B /* XCRemoteSwiftPackageReference "realm-swift" */,
+
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3C75E8A82DCA439300FBF896 /* Products */;
@@ -363,15 +359,19 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3CB71CFF2E5EDEC900D6503B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+
+		3CB726262E5FD98A00D6503B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.5.2;
 			};
 		};
-		3CB71DC82E5EE10B00D6503B /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+
+		3CB726272E5FD9A100D6503B /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
@@ -381,18 +381,6 @@
 		};
 /* End XCRemoteSwiftPackageReference section */
 
-/* Begin XCSwiftPackageProductDependency section */
-		3CB71DC92E5EE10B00D6503B /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3CB71DC82E5EE10B00D6503B /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = Realm;
-		};
-		3CB71DCB2E5EE10B00D6503B /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3CB71DC82E5EE10B00D6503B /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3C75E89F2DCA439300FBF896 /* Project object */;
 }
