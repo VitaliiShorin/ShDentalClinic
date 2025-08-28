@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3C7E7D5F2E5FE27E005FBAFE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3C7E7D5E2E5FE27E005FBAFE /* RealmSwift */; };
+		3C7E7D602E5FE287005FBAFE /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3C7E7D5E2E5FE27E005FBAFE /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3C7E7D632E5FE817005FBAFE /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3C7E7D622E5FE817005FBAFE /* Lottie */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		3C7824712E340C4600513154 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -13,6 +19,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3C7E7D602E5FE287005FBAFE /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -36,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C7E7D5F2E5FE27E005FBAFE /* RealmSwift in Frameworks */,
+				3C7E7D632E5FE817005FBAFE /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +88,8 @@
 			);
 			name = ShDentalClinic;
 			packageProductDependencies = (
+				3C7E7D5E2E5FE27E005FBAFE /* RealmSwift */,
+				3C7E7D622E5FE817005FBAFE /* Lottie */,
 			);
 			productName = ShDentalClinic;
 			productReference = 3C75E8A72DCA439300FBF896 /* ShDentalClinic.app */;
@@ -109,6 +120,8 @@
 			mainGroup = 3C75E89E2DCA439300FBF896;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				3C7E7D5B2E5FE27E005FBAFE /* XCRemoteSwiftPackageReference "realm-swift" */,
+				3C7E7D612E5FE817005FBAFE /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3C75E8A82DCA439300FBF896 /* Products */;
@@ -350,6 +363,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3C7E7D5B2E5FE27E005FBAFE /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		3C7E7D612E5FE817005FBAFE /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3C7E7D5E2E5FE27E005FBAFE /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3C7E7D5B2E5FE27E005FBAFE /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		3C7E7D622E5FE817005FBAFE /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3C7E7D612E5FE817005FBAFE /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3C75E89F2DCA439300FBF896 /* Project object */;
 }
