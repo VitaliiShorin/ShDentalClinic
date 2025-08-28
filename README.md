@@ -121,9 +121,9 @@ iOS-приложение для стоматологической клиник�
 
 **Имя:** Шорин Виталий Сергеевич
 
-- Telegram: [https://t.me/Vitalii_SHN](URL)
-- Email: [9971425@mail.ru](URL)
-- GitHub: [https://github.com/VitaliiShorin](URL)
+- Telegram: https://t.me/Vitalii_SHN  
+- Email: 9971425@mail.ru  
+- GitHub: https://github.com/VitaliiShorin  
 
 ## P.S.
 
