@@ -11,9 +11,7 @@ iOS-приложение для стоматологической клиник�
 <div align="center">
 
 ## Скриншоты приложения
-
-<img src="https://github.com/user-attachments/assets/279095f8-bde7-44f4-9b55-f369f36bc391" width="200" />
-<img src="https://github.com/user-attachments/assets/caf35d71-34f0-4fe3-ae21-359a5e4d3d09" width="200" />
+<img src="https://github.com/user-attachments/assets/d23d91d0-eba9-406e-b097-29b05fc219c7" width="200" />
 <img src="https://github.com/user-attachments/assets/97f368d1-d6dd-4cea-b9a2-0dbb70b5e058" width="200" />
 <img src="https://github.com/user-attachments/assets/e160b9ea-2359-42dc-baab-81240f8d760e" width="200" />
 <img src="https://github.com/user-attachments/assets/6b33d6eb-cf56-480f-995d-58f9442b9063" width="200" />
