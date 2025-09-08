@@ -12,11 +12,12 @@ struct MainView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack {
-                LogoView()
                 
-                PhotoOfTheCabinetView()
+//                PhotoOfTheCabinetView()
                 
                 VStack(spacing: 16) {
+                    LogoView()
+                    
                     CustomSectionView(
                         text: "Записаться на прием",
                         imageName: "ЗаписатьсяНаПрием",

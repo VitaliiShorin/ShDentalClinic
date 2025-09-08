@@ -46,7 +46,7 @@ struct CustomSectionView: View {
                         Text(text)
                             .font(.title3.bold())
                             .multilineTextAlignment(.leading)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.black.opacity(0.85))
                             .padding(.top)
                             .padding(.leading, 24)
                         
@@ -64,7 +64,7 @@ struct CustomSectionView: View {
                     VStack {
                         Text(text)
                             .font(.title3.bold())
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.black.opacity(0.85))
                             .padding(.top)
                         
                         Image(imageName)
@@ -79,7 +79,7 @@ struct CustomSectionView: View {
                     VStack {
                         Text(text)
                             .font(.title3.bold())
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.black.opacity(0.85))
                         Image(imageName)
                             .resizable()
                             .scaledToFit()
