@@ -52,7 +52,7 @@ struct AboutTheDoctorView: View {
                 } else {
                     let doctorReviews = reviewsVM.reviews(forDoctor: doctor.fullName)
                     if doctorReviews.isEmpty {
-                        Text("Отзывов пока нет. Оставьте свой!")
+                        Text("Отзывов пока нет.")
                             .foregroundStyle(.gray)
                     } else {
                         VStack(spacing: 16) {
